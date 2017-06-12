@@ -1,0 +1,9 @@
+[submodule "pix2face"]
+	path = pix2face
+	url = git@github.com:stresearch/pix2face.git
+[submodule "janus"]
+	path = janus
+	url = git@github.com:stresearch/janus.git
+[submodule "dlib"]
+	path = dlib
+	url = git@github.com:davisking/dlib.git
