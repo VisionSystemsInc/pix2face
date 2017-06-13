@@ -7,7 +7,7 @@ image --> PNCC + offsets --> camera and shape coefficients --> renderings
 
 
 ### Instructions
-1. Run "download_models"
+1. Run "download_data"
 2. Build the Janus pvr component.
 3. Run demo.py
 
