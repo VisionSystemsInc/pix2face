@@ -7,3 +7,6 @@
 [submodule "dlib"]
 	path = dlib
 	url = git@github.com:davisking/dlib.git
+[submodule "EGL-Registry"]
+	path = EGL-Registry
+	url = git@github.com:KhronosGroup/EGL-Registry.git
