@@ -1,7 +1,6 @@
 """ This Script Demonstrates the basic image -> PNCC + offsets --> coefficient estimation --> 3D Jitter pipeline. """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import janus.pvr.python_util.io_utils as io_utils
 import janus.pvr.python_util.geometry_utils as geometry_utils
