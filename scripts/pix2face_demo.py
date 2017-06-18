@@ -52,6 +52,13 @@ img_ids = ['img0',]
 coeffs = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [offsets,])
 print('..Done.')
 
+# Print Yaw, Pitch, Roll of Head
+R_cam = np.array(coeffs.camera(0).rotation.as_matrix()) # rotation matrix of estimated camera
+R0 = np.diag((1,-1,-1))  # R0 is the rotation matrix of a frontal camera
+R_head = np.dot(R0,R_cam)
+yaw, pitch, roll = geometry_utils.matrix_to_Euler_angles(R_head, order='YXZ')
+print('yaw, pitch, roll = %0.1f, %0.1f, %0.1f (degrees)' % (np.rad2deg(yaw), np.rad2deg(pitch), np.rad2deg(roll)))
+
 # Render 3D-Jittered Images
 print('Rendering Jittered Images..')
 jitterer = face3d.media_jitterer_perspective([img,], coeffs, head_mesh, subject_components, expression_components, renderer, "")
