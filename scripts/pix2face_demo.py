@@ -32,6 +32,8 @@ pvr_data_dir = os.path.join(this_dir, '../janus/components/pvr/data_3DMM/')
 debug_dir = ''
 debug_mode = False
 
+num_subject_coeffs = 199  # max 199
+num_expression_coeffs = 29  # max 29
 
 # load needed data files
 head_mesh = face3d.head_mesh(pvr_data_dir)
@@ -39,12 +41,15 @@ subject_components = np.load(os.path.join(pvr_data_dir, 'pca_components_subject.
 expression_components = np.load(os.path.join(pvr_data_dir, 'pca_components_expression.npy'))
 subject_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_subject.npy'))
 expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
+
+# keep only the PCA components that we will be estimating
+subject_components = subject_components[0:num_subject_coeffs,:]
+expression_components = expression_components[0:num_expression_coeffs,:]
+
+# create rendering object (encapsulates OpenGL context)
 renderer = face3d.mesh_renderer()
-
-
 # create coefficient estimator
 coeff_estimator = face3d.media_coefficient_from_PNCC_and_offset_estimator(head_mesh, subject_components, expression_components, subject_ranges, expression_ranges, debug_mode, debug_dir)
-
 
 # Estimate Coefficients from PNCC and Offsets
 print('Estimating Coefficients..')
@@ -53,7 +58,7 @@ coeffs = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [of
 print('..Done.')
 
 # Print Yaw, Pitch, Roll of Head
-R_cam = np.array(coeffs.camera(0).rotation.as_matrix()) # rotation matrix of estimated camera
+R_cam = np.array(coeffs.camera(0).rotation.as_matrix())  # rotation matrix of estimated camera
 R0 = np.diag((1,-1,-1))  # R0 is the rotation matrix of a frontal camera
 R_head = np.dot(R0,R_cam)
 yaw, pitch, roll = geometry_utils.matrix_to_Euler_angles(R_head, order='YXZ')
