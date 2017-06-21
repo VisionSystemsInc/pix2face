@@ -36,7 +36,7 @@ for pncc, offsets in outputs:
     #pncc = outputs[0][0]
     #offsets = outputs[0][1]
 
-    cam_params = face3d.compute_camera_params_ortho(pncc, offsets)
+    cam_params = face3d.compute_camera_params_from_pncc_and_offsets_ortho(pncc, offsets)
 
     # Print Yaw, Pitch, Roll of Head
     R_cam = np.array(cam_params.rotation.as_matrix())  # rotation matrix of estimated camera
