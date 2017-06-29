@@ -25,7 +25,7 @@ class Landmarks2Headpose(object):
         self.landmark_detector = dlib.shape_predictor(dlib_aflw_landmark_model_fname)
 
         # add 7 degrees to pitch value so that pitch=0 -> "Frankfurt Horizontal Plane" is horizontal.
-        self.pitch_offset = np.deg2rad(7.0)
+        self.pitch_offset = np.deg2rad(-7.0)
 
 
     def headpose(self, img, verbose=False):

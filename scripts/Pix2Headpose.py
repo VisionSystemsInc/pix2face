@@ -25,7 +25,7 @@ class Pix2Headpose(object):
         self.cuda_device = cuda_device
 
         # add 7 degrees to pitch value so that pitch=0 -> "Frankfurt Horizontal Plane" is horizontal.
-        self.pitch_offset = np.deg2rad(7.0)
+        self.pitch_offset = np.deg2rad(-7.0)
 
     def headpose(self, img, verbose=False):
         """
