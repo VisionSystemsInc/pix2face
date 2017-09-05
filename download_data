@@ -3,10 +3,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR"
-wget https://www.dropbox.com/s/v63ok3cx1cn1cug/data_3DMM.tgz 
+wget https://www.dropbox.com/s/fo8k0ha2pqicilu/data_3DMM_v2.tgz
 cd janus/components/pvr
-tar -xvf "$DIR"/data_3DMM.tgz
-rm "$DIR"/data_3DMM.tgz
+tar -xvf "$DIR"/data_3DMM_v2.tgz
+rm "$DIR"/data_3DMM_v2.tgz
 
 cd "$DIR"/pix2face/data/models
 wget https://www.dropbox.com/s/b0byw0lb3oecv37/pix2face_unet_cuda75.pt
