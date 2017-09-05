@@ -1,16 +1,15 @@
 """ This Script Demonstrates the basic image -> PNCC + offsets --> camera estimation pipeline
 """
-
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import janus.pvr.python_util.io_utils as io_utils
 import janus.pvr.python_util.geometry_utils as geometry_utils
-import face3d
-import vxl
-import Pix2Headpose
-import Landmarks2Headpose
 
+use_pix2face = True  # Set this to False to use sparse landmark-based pose estimation instead.
+if use_pix2face:
+    import Pix2Headpose
+else:
+    import Landmarks2Headpose
 
 # Estimate PNCC and Offsets using pix2face network
 
@@ -26,10 +25,10 @@ img = io_utils.imread(img_fname)
 num_test_images = 100
 imgs = [img,] * num_test_images
 
-use_pix2face = True  # Set this to False to use sparse landmark-based pose estimation instead.
 
 if use_pix2face:
     # Use dense alignment to estimate pose
+    # If using cuda 8, set cuda_v8=True for faster runtime.
     pose_estimator = Pix2Headpose.Pix2Headpose(pix2face_component_dir, cuda_device=0, cuda_v8=False)
 else:
     # Use sparse landmarks to estimate pose (slightly faster, but less accurate)
