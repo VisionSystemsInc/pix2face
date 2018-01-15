@@ -14,7 +14,7 @@ import pix2face
 this_dir = os.path.dirname(__file__)
 pix2face_data_dir = os.path.join(this_dir, '../pix2face/data/')
 
-model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_cuda75.pt')
+model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_v10.pt')
 model = pix2face.test.load_model(model_fname)
 
 
@@ -42,8 +42,10 @@ subject_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_subject.npy
 expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
 
 # keep only the PCA components that we will be estimating
-subject_components = subject_components[0:num_subject_coeffs,:]
-expression_components = expression_components[0:num_expression_coeffs,:]
+subject_components = vxl.vnl_matrix(subject_components[0:num_subject_coeffs,:])
+expression_components = vxl.vnl_matrix(expression_components[0:num_expression_coeffs,:])
+subject_ranges = vxl.vnl_matrix(subject_ranges[0:num_subject_coeffs,:])
+expression_ranges = vxl.vnl_matrix(expression_ranges[0:num_expression_coeffs,:])
 
 # create rendering object (encapsulates OpenGL context)
 renderer = face3d.mesh_renderer()
@@ -53,7 +55,9 @@ coeff_estimator = face3d.media_coefficient_from_PNCC_and_offset_estimator(head_m
 # Estimate Coefficients from PNCC and Offsets
 print('Estimating Coefficients..')
 img_ids = ['img0',]
-coeffs = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [offsets,])
+coeffs, result = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [offsets,])
+if not result.success:
+    raise Exception('ERROR estimating coefficents for ' + img_fname)
 print('..Done.')
 
 # Print Yaw, Pitch, Roll of Head

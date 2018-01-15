@@ -21,7 +21,7 @@ img_filenames = glob.glob(data_dir + '/*.jpg')
 this_dir = os.path.dirname(__file__)
 pix2face_data_dir = os.path.join(this_dir, '../pix2face/data/')
 
-model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_cuda75.pt')
+model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_v10.pt')
 model = pix2face.test.load_model(model_fname)
 
 
@@ -48,8 +48,10 @@ for img_fname in img_filenames:
     expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
 
     # keep only the PCA components that we will be estimating
-    subject_components = subject_components[0:num_subject_coeffs,:]
-    expression_components = expression_components[0:num_expression_coeffs,:]
+    subject_components = vxl.vnl_matrix(subject_components[0:num_subject_coeffs,:])
+    expression_components = vxl.vnl_matrix(expression_components[0:num_expression_coeffs,:])
+    subject_ranges = vxl.vnl_matrix(subject_ranges[0:num_subject_coeffs,:])
+    expression_ranges = vxl.vnl_matrix(expression_ranges[0:num_expression_coeffs,:])
 
     # create rendering object (encapsulates OpenGL context)
     renderer = face3d.mesh_renderer()
@@ -62,7 +64,10 @@ for img_fname in img_filenames:
     # Estimate Coefficients from PNCC and Offsets
     print('Estimating Coefficients..')
     img_ids = [basename,]
-    coeffs = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [offsets,])
+    coeffs, result = coeff_estimator.estimate_coefficients_perspective(img_ids, [pncc,], [offsets,])
+    if not result.success:
+        print('ERROR estimating coefficients for ' + img_fname)
+        continue
     print('..Done.')
 
     coeffs.save(output_basename + '_coeffs.txt')

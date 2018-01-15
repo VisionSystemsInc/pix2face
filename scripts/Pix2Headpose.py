@@ -15,10 +15,7 @@ class Pix2Headpose(object):
         #this_dir = os.path.dirname(__file__)
         pix2face_data_dir = os.path.join(pix2facedir, 'pix2face_super', 'pix2face', 'data/')
 
-        if cuda_v8:
-            model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_cuda80.pt')
-        else:
-            model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_cuda75.pt')
+        model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_v10.pt')
 
         self.model = pix2face.test.load_model(model_fname)
         self.cuda_device = cuda_device
