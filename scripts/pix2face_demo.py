@@ -11,17 +11,17 @@ import pix2face
 
 # Estimate PNCC and Offsets using pix2face network
 
+cuda_device = 0
+
 this_dir = os.path.dirname(__file__)
 pix2face_data_dir = os.path.join(this_dir, '../pix2face/data/')
 
-model_fname = os.path.join(pix2face_data_dir, 'models/pix2face_unet_v10.pt')
-model = pix2face.test.load_model(model_fname)
-
+model = pix2face.test.load_pretrained_model(cuda_device=cuda_device)
 
 img_fname = os.path.join(pix2face_data_dir, 'CASIA_0000107_004.jpg')
 img = io_utils.imread(img_fname)
 print('Estimating PNCC + Offsets..')
-outputs = pix2face.test.test(model, [img,])
+outputs = pix2face.test.test(model, [img,], cuda_device=cuda_device)
 pncc = outputs[0][0]
 offsets = outputs[0][1]
 print('..Done')
@@ -76,7 +76,7 @@ new_expression_coeffs = np.zeros_like(coeffs.expression_coeffs(0))
 new_expression_coeffs[1] = 2.0
 new_expression_coeffs[2] = -2.0
 new_expression_coeffs[14] = 1.5
-render_expr = jitterer.render_perspective(coeffs.camera(0), coeffs.subject_coeffs(), new_expression_coeffs, subject_components, expression_components)
+render_expr = jitterer.render(coeffs.camera(0), coeffs.subject_coeffs(), new_expression_coeffs, subject_components, expression_components)
 
 
 # manually alter pose
@@ -84,12 +84,12 @@ delta_R = vxl.vgl_rotation_3d(geometry_utils.Euler_angles_to_quaternion(np.pi/3,
 cam = coeffs.camera(0)
 new_R = cam.rotation * delta_R
 new_cam = face3d.perspective_camera_parameters(cam.focal_len, cam.principal_point, new_R, cam.translation, cam.nx, cam.ny)
-render_rot = jitterer.render_perspective(new_cam, coeffs.subject_coeffs(), coeffs.expression_coeffs(0), subject_components, expression_components)
+render_rot = jitterer.render(new_cam, coeffs.subject_coeffs(), coeffs.expression_coeffs(0), subject_components, expression_components)
 print('..Done.')
 
 # save out results
 output_dir = this_dir
 print('Saving results')
 io_utils.imwrite(img, os.path.join(output_dir, "image_original.jpg"))
-io_utils.imwrite(render_expr, os.path.join(output_dir, "image_expression_jitter.jpg"))
-io_utils.imwrite(render_rot, os.path.join(output_dir, "image_pose_jitter.jpg"))
+io_utils.imwrite(render_expr[:,:,0:3], os.path.join(output_dir, "image_expression_jitter.jpg"))
+io_utils.imwrite(render_rot[:,:,0:3], os.path.join(output_dir, "image_pose_jitter.jpg"))
