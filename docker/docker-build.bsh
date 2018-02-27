@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+USER_ID=$(id -u)
+DOCKER_FILE=Dockerfile
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "DIR=${DIR}"
+SRC=${DIR}
+
+docker build -t pix2face --build-arg user_id=${USER_ID} -f ${DOCKER_FILE} .

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+
+cd /pix2face_super/docker
+mkdir -p build
+export JANUS_ROOT=/pix2face_super/docker/build
+export JANUS_VENDOR=/pix2face_super/docker/build
+cd build
+cmake3 /pix2face_super
+make -j install

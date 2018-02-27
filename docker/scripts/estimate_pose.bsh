@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# create a list of filenames (paths are valid inside the docker)
+find /input_dir -type f | sort > /tmp/images_in.txt
+
+# estimate the poses
+python /pix2face_super/scripts/estimate_pose_batch.py /tmp/images_in.txt /tmp/poses_docker.csv 
+
+# remove the docker directory from the filenames
+sed 's|^/input_dir/||' /tmp/poses_docker.csv > /output_dir/poses.csv
