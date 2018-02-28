@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# create a list of filenames (paths are valid inside the docker)
+find /input_dir -type f | sort > /tmp/images_in.txt
+
+# estimate the coefficients for each image
+python /pix2face_super/scripts/estimate_coeffs_batch.py /tmp/images_in.txt /output_dir
