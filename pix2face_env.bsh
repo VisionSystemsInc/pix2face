@@ -1,0 +1,20 @@
+# Source this file to set up pix2face environment.
+PIX2FACE_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Make sure PIX2FACE_BUILD_DIR is set
+if [ -z "$PIX2FACE_BUILD_DIR" ];
+  then echo "Please set '$PIX2FACE_BUILD_DIR' to the path of your build directory before sourcing this script.";
+  return [1];
+fi
+
+# set this variable to the location of your NVIDIA libraries if you want to use CUDA acceleration.
+#export NVIDIA_LIB_DIR=/usr/lib64/nvidia
+
+# Update PYTHONPATH
+# janus python modules
+export PYTHONPATH="${PIX2FACE_SRC_DIR}"/janus/python:${PYTHONPATH}
+# pix2face
+export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face:$PYTHONPATH
+# compiled python modules
+export PYTHONPATH="${PIX2FACE_BUILD_DIR}"/janus/lib
+

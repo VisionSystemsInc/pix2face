@@ -42,6 +42,13 @@ make install
 ```
 
 Configure your python path:
+Make sure to set the environment variable `PIX2FACE_BUILD_DIR`, and then source the env script:
+```bash
+cd $PIX2FACE_SRC_DIR
+source ./pix2face_env.bsh
+```
+
+Or, manually:
 
 ```bash
 export PYTHONPATH=$PIX2FACE_SRC_DIR/pix2face:$PIX2FACE_SRC_DIR/janus/python:$PIX2FACE_BUILD_DIR/janus/lib
