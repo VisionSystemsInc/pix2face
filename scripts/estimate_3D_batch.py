@@ -3,8 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import janus.pvr.python_util.io_utils as io_utils
-import janus.pvr.python_util.geometry_utils as geometry_utils
+from PIL import Image
 import face3d
 import vxl
 import pix2face
@@ -26,7 +25,7 @@ model = pix2face.test.load_model(model_fname)
 
 
 for img_fname in img_filenames:
-    img = io_utils.imread(img_fname)
+    img = np.array(Image.open(img_fname))
     print('Estimating PNCC + Offsets..')
     outputs = pix2face.test.test(model, [img,])
     pncc = outputs[0][0]

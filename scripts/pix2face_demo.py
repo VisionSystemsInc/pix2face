@@ -2,8 +2,8 @@
 
 import numpy as np
 import os
-import janus.pvr.python_util.io_utils as io_utils
 import janus.pvr.python_util.geometry_utils as geometry_utils
+import janus.pvr.python_util.io_utils as io_utils
 import face3d
 import vxl
 import pix2face
@@ -19,7 +19,7 @@ pix2face_data_dir = os.path.join(this_dir, '../pix2face/data/')
 model = pix2face.test.load_pretrained_model(cuda_device=cuda_device)
 
 img_fname = os.path.join(pix2face_data_dir, 'CASIA_0000107_004.jpg')
-img = io_utils.imread(img_fname)
+img = np.array(Image.open(img_fname))
 print('Estimating PNCC + Offsets..')
 outputs = pix2face.test.test(model, [img,], cuda_device=cuda_device)
 pncc = outputs[0][0]

@@ -2,7 +2,7 @@
 """
 import numpy as np
 import os
-import janus.pvr.python_util.io_utils as io_utils
+from PIL import Image
 import pix2face.test
 import pix2face_estimation.camera_estimation
 
@@ -10,7 +10,7 @@ cuda_device = None
 
 this_dir = os.path.dirname(__file__)
 img_fname = os.path.join(this_dir, '../pix2face/data', 'CASIA_0000107_004.jpg')
-img = io_utils.imread(img_fname)
+img = np.array(Image.open(img_fname))
 
 # create a list of identical images for the purpose of testing timing
 num_test_images = 100
