@@ -16,5 +16,5 @@ export PYTHONPATH="${PIX2FACE_SRC_DIR}"/janus/python:${PYTHONPATH}
 # pix2face
 export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face:$PYTHONPATH
 # compiled python modules
-export PYTHONPATH="${PIX2FACE_BUILD_DIR}"/janus/lib
+export PYTHONPATH="${PIX2FACE_BUILD_DIR}"/janus/lib:$PYTHONPATH
 
