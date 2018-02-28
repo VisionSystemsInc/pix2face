@@ -6,12 +6,14 @@
 
 ## Requirements
 You have two options for running: within a docker container, or natively on your system. The only requirement for the former is docker itself.  The requirements for building and running natively are:
+
    * CMake (version 2.8.12 or higher)
    * Python (versions 2.7 and 3.5 have been tested)
    * numpy, Pillow, scikit-image
    * pytorch (version 0.3.0.post4 has been tested)
 
 Optional:
+
    * CUDA (for GPU acceleration of pix2face network and coefficient estimation)
 
 For a full list of system packages required, consult the [Dockerfile](./docker/Dockerfile).
