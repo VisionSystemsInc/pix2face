@@ -2,6 +2,7 @@
 ## "Superproject" wrapping components of the complete pix2face pipeline, including:
    * The pix2face dense face alignment and 3D estimation network
    * The camera/pose and face coefficient estimation contained in the Janus repository
+![](pix2face_super_teaser.png "pix2face_teaser")
 
 ## Requirements
 You have two options for running: within a docker container, or natively on your system. The only requirement for the former is docker itself.  The requirements for building and running natively are:
@@ -9,7 +10,7 @@ You have two options for running: within a docker container, or natively on your
    * Python (versions 2.7 and 3.5 have been tested)
    * numpy, Pillow, scikit-image
    * pytorch (version 0.3.0.post4 has been tested)
-      
+
 Optional:
    * CUDA (for GPU acceleration of pix2face network and coefficient estimation)
 
