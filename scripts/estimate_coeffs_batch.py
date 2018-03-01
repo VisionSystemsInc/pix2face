@@ -8,7 +8,9 @@ import pix2face.test
 import pix2face_estimation.coefficient_estimation
 from torch.multiprocessing import Pool
 
-cuda_device = 0
+# set cuda_device to an integer value to run on a GPU, set to None to run on CPU
+cuda_device = None
+
 num_subject_coeffs=30
 num_expression_coeffs=20
 
