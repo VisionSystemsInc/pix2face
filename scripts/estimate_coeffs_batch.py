@@ -7,7 +7,7 @@ from PIL import Image
 import pix2face.test
 import pix2face_estimation.coefficient_estimation
 
-cuda_device = None
+cuda_device = 0
 num_subject_coeffs=30
 num_expression_coeffs=20
 
@@ -37,10 +37,10 @@ def main(input_fname, output_dir):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print('Usage: ' + sys.argv[0] + ' <input_file> <output_file>')
+        print('Usage: ' + sys.argv[0] + ' <input_file> <output_dir>')
         print('  <input_file> should contain a list of image filenames')
-        print('  <output_file> will contain lines of the form filename,yaw,pitch,roll. Pose angels have units degrees')
+        print('  One coefficients file per image will be written to <output_dir>.')
         sys.exit(-1)
     input_fname = sys.argv[1]
-    output_fname = sys.argv[2]
-    main(input_fname, output_fname)
+    output_dir = sys.argv[2]
+    main(input_fname, output_dir)
