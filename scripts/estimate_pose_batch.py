@@ -7,6 +7,7 @@ from PIL import Image
 import pix2face.test
 import pix2face_estimation.camera_estimation
 
+# Set this to an integer to run on a CUDA device, None to run on the CPU.
 cuda_device = None
 
 def main(input_fname, output_fname):
@@ -16,12 +17,17 @@ def main(input_fname, output_fname):
     with open(output_fname, 'w') as ofd, open(input_fname, 'r') as ifd:
         # write header for output
         ofd.write('FILENAME, HEAD_YAW, HEAD_PITCH, HEAD_ROLL\n')
+        # for each line in the input file
         for line in ifd:
             img_fname = line.strip()
             print(img_fname)
+            # load the image
             img = np.array(Image.open(img_fname))
+            # estimate yaw,pitch,roll
             pose = pix2face_estimation.camera_estimation.estimate_head_pose(img, pix2face_net, cuda_device=cuda_device)
+            # write out the pose values to the output CSV file
             ofd.write(img_fname + ', %0.1f, %0.1f, %0.1f\n' % pose)
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:

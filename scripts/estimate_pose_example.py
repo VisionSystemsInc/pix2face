@@ -6,6 +6,7 @@ from PIL import Image
 import pix2face.test
 import pix2face_estimation.camera_estimation
 
+# Set this to an integer value to run on a CUDA device, None for CPU.
 cuda_device = None
 
 this_dir = os.path.dirname(__file__)
