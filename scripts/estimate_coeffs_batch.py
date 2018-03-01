@@ -1,14 +1,11 @@
 """ This Script Demonstrates the basic image -> PNCC + offsets --> camera estimation pipeline
 """
-print('IN PYTHON')
 import sys
 import os
 import numpy as np
 from PIL import Image
 import pix2face.test
 import pix2face_estimation.coefficient_estimation
-print('imported')
-
 
 cuda_device = None
 num_subject_coeffs=30
@@ -19,10 +16,8 @@ pvr_data_dir = os.path.join(this_dir,'../janus/components/pvr/data_3DMM')
 
 def main(input_fname, output_dir):
     # load the 3DMM data
-    print('loading mm_data from: ' + str(pvr_data_dir))
     mm_data = pix2face_estimation.coefficient_estimation.load_pix2face_data(pvr_data_dir, num_subject_coeffs, num_expression_coeffs)
     # load the pix2face network
-    print('loading network cuda_device=' + str(cuda_device))
     pix2face_net = pix2face.test.load_pretrained_model(cuda_device=cuda_device)
     # open input and output files, process one file per line
     with open(input_fname, 'r') as ifd:
@@ -41,7 +36,6 @@ def main(input_fname, output_dir):
             coeffs.save(output_fname)
 
 if __name__ == '__main__':
-    print('MAIN!')
     if len(sys.argv) != 3:
         print('Usage: ' + sys.argv[0] + ' <input_file> <output_file>')
         print('  <input_file> should contain a list of image filenames')
