@@ -67,6 +67,8 @@ The scripts directory contains several examples of pose and coefficient estimati
 python scripts/estimate_pose_batch.py $IMAGE_PATHS_FILE $POSE_CSV_FNAME
 ```
 
+Note that the examples in the [scripts](./scripts) directory generally set a variable `cuda_device`, which is defaulted to `None`.  The value of `None` will cause the pix2face network to run on the CPU.  Set `cuda_device` to an integer value to run on the corresponding GPU device for increased processing speed.
+
 
 ## Citation
 If you find this software useful, please consider referencing:
