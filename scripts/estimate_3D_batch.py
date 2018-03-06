@@ -3,13 +3,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from PIL import Image
+from PIL import Image, ImageFile
 import face3d
 import vxl
 import pix2face
 import glob
 import skimage.external.tifffile as tifffile
 
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # Estimate PNCC and Offsets using pix2face network
 

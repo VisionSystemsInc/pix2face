@@ -3,7 +3,7 @@
 import sys
 import os
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFile
 import pix2face.test
 import pix2face_estimation.coefficient_estimation
 from torch.multiprocessing import Pool
@@ -15,6 +15,8 @@ num_subject_coeffs=30
 num_expression_coeffs=20
 
 num_threads = 4
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 this_dir = os.path.dirname(__file__)
 pvr_data_dir = os.path.join(this_dir,'../janus/components/pvr/data_3DMM')

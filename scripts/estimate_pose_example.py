@@ -2,12 +2,14 @@
 """
 import numpy as np
 import os
-from PIL import Image
+from PIL import Image, ImageFile
 import pix2face.test
 import pix2face_estimation.camera_estimation
 
 # Set this to an integer value to run on a CUDA device, None for CPU.
 cuda_device = None
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 this_dir = os.path.dirname(__file__)
 img_fname = os.path.join(this_dir, '../pix2face/data', 'CASIA_0000107_004.jpg')
