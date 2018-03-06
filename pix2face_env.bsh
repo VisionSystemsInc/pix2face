@@ -3,7 +3,7 @@ PIX2FACE_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Make sure PIX2FACE_BUILD_DIR is set
 if [ -z "$PIX2FACE_BUILD_DIR" ];
-  then echo "Please set '$PIX2FACE_BUILD_DIR' to the path of your build directory before sourcing this script.";
+  then echo "Please set environment variable 'PIX2FACE_BUILD_DIR' to the path of your build directory before sourcing this script.";
   return [1];
 fi
 
