@@ -1,10 +1,10 @@
-""" This Script Demonstrates the basic image -> PNCC + offsets --> camera estimation pipeline
+""" This Script Demonstrates the basic image -> PNCC + offsets --> coefficient estimation pipeline
 """
 import numpy as np
 import os
 from PIL import Image
 import pix2face.test
-import pix2face_estimation.camera_estimation
+import pix2face_estimation.coefficient_estimation
 
 # Set this to an integer value to run on a CUDA device, None for CPU.
 cuda_device = None
@@ -19,16 +19,17 @@ imgs = [img,] * num_test_images
 
 # Use dense alignment to estimate pose
 pix2face_net = pix2face.test.load_pretrained_model(cuda_device)
+pix2face_data = pix2face_estimation.coefficient_estimation.load_pix2face_data(num_subject_coeffs=30, num_expression_coeffs=20)
 
 import time
 t0 = time.time()
 
 # estimate pose for all images in the list
 for img in imgs:
-   pose = pix2face_estimation.camera_estimation.estimate_head_pose(img, pix2face_net, cuda_device)
+   coeffs = pix2face_estimation.coefficient_estimation.estimate_coefficients(img, pix2face_net, pix2face_data, cuda_device)
 
 t1 = time.time()
 total_elapsed = t1 - t0
 
-print('yaw, pitch, roll = %0.1f, %0.1f, %0.1f' % pose)
+print('coeffs = ' + str(coeffs))
 print('Total Elapsed = %0.1f s : Average %0.2f s / image' % (total_elapsed, total_elapsed / num_test_images))
