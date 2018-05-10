@@ -14,14 +14,14 @@ pvr_data_path = os.path.join(pix2face_root, 'janus', 'components', 'pvr', 'data_
 if not os.path.isdir(pvr_data_path):
     print("%s does not exist!" % pvr_data_path)
     sys.exit()
-msceleb1m_coeffs_path = '/data/msceleb1m/msceleb1m_filtered_plus_vggface2_coeffs.csv'
-msceleb1m_jitter_dir = '/data/msceleb1m/msceleb1m_jitters'
-min_yaw = 50; max_yaw = 90
-egl_device = 1
+msceleb1m_coeffs_path = '/data3/data/msceleb1m/msceleb1m_filtered_plus_vggface2_coeffs.csv'
+msceleb1m_jitter_dir = '/data3/data/msceleb1m/msceleb1m_jitters'
+min_yaw = 30; max_yaw = 90
+egl_device = 5
 force_rewrite = False
 N_jitters = 1
 jobs = 4;
-
+print_rate = 1000
 
 def category_index(path):
     return os.path.basename(os.path.dirname(path))
@@ -55,13 +55,21 @@ def process_line(line, jitterer):
         for i, im in enumerate(ims):
             output_f = os.path.join(output_dir, "%s_jitter_%s.jpg" % (chipID, i))
             io_utils.imwrite(im, output_f)
-            print("%s written! " % output_f)
+            # print("%s written! " % output_f)
 
 
 def process_chunck(chunck):
     profile_jitterer = face3d.pose_jitterer_profile(pvr_data_path, 199, 29, "", min_yaw, max_yaw, egl_device)
-    for line in chunck:
+    t_start = time.time()
+    pid = os.getpid()
+    for i, line in enumerate(chunck):
         process_line(line, profile_jitterer)
+        if i % print_rate ==0  and i != 0:
+            t_end = time.time()
+            duration = t_end - t_start
+            speed = float(print_rate) / duration
+            print("[PID_%s]: [%s/%s] - jittering with speed %.3f im/s" % (pid, i, len(chunck), speed))
+            t_start =time.time()
 
 if __name__ == '__main__':
     lines = open(msceleb1m_coeffs_path, 'r').readlines()
@@ -70,6 +78,5 @@ if __name__ == '__main__':
     chunks = [lines[i: i + chunksize] for i in xrange(0, L, chunksize)]
     workers = Pool(processes=8)
     workers.map(process_chunck, chunks)
-    workers.join()
     workers.close()
     # process_chunck(chunks[0])
