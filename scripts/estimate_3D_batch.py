@@ -53,8 +53,6 @@ for img_fname in img_filenames:
     subject_ranges = vxl.vnl_matrix(subject_ranges[0:num_subject_coeffs,:])
     expression_ranges = vxl.vnl_matrix(expression_ranges[0:num_expression_coeffs,:])
 
-    # create rendering object (encapsulates OpenGL context)
-    renderer = face3d.mesh_renderer()
     # create coefficient estimator
     coeff_estimator = face3d.media_coefficient_from_PNCC_and_offset_estimator(head_mesh, subject_components, expression_components, subject_ranges, expression_ranges, debug_mode, debug_dir)
 
