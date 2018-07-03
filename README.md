@@ -36,6 +36,11 @@ cd $PIX2FACE_BUILD_DIR
 cmake $PIX2FACE_SRC_DIR
 ```
 
+Note: Depending on the location of your graphics libraries, you may have to set CMAKE_PREFIX_PATH. For example:
+```bash
+cmake -DCMAKE_PREFIX_PATH=/usr/lib64/nvidia $PIX2FACE_SRC_DIR
+```
+
 Build the Janus binaries:
 ```bash
 make install
