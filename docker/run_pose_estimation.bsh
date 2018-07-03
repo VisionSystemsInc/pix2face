@@ -7,11 +7,6 @@ echo "INPUT_DIR=${INPUT_DIR}"
 OUTPUT_DIR=$2
 echo "OUTPUT_DIR=${OUTPUT_DIR}"
 
-DOCKER=docker
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PIX2FACE_SUPER_DIR="$(readlink -f ${DIR}/../)"
-echo "PIX2FACE_SUPER_DIR=${PIX2FACE_SUPER_DIR}"
 
-
-${DOCKER} run -it -v ${PIX2FACE_SUPER_DIR}:/pix2face_super -v ${INPUT_DIR}:/input_dir -v ${OUTPUT_DIR}:/output_dir  pix2face /pix2face_super/docker/scripts/estimate_pose.bsh
+docker-compose -f ${DIR}/docker-compose.yml run -v ${INPUT_DIR}:/input_dir -v ${OUTPUT_DIR}:/output_dir pix2face /pix2face_super/docker/scripts/estimate_pose.bsh

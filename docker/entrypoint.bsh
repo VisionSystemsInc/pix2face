@@ -1,0 +1,4 @@
+#!/bin/bash
+source /pix2face_venv/bin/activate
+# run the passed command inside the virtualenv
+exec "$@"

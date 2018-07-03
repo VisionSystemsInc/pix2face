@@ -1,0 +1,23 @@
+version: "2.4"
+services:
+  pix2face:
+    build:
+      context: .
+      args:
+        - user_id=${USER_ID-1000}
+    image: pix2face
+    volumes:
+      - type: bind
+        source: ..
+        target: /pix2face_super
+      - type: volume
+        source: pix2face_build
+        target: /pix2face_build
+      - type: volume
+        source: pix2face_install
+        target: /pix2face_install
+    cap_add:
+      - SYS_PTRACE  # for gdb
+volumes:
+  pix2face_build:
+  pix2face_install:

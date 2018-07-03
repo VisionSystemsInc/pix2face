@@ -3,9 +3,6 @@
 # fail if inputs don't exist
 set -eu
 
-DOCKER=docker
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PIX2FACE_SUPER_DIR="$(readlink -f ${DIR}/../)"
 
-${DOCKER} run -it -v ${PIX2FACE_SUPER_DIR}:/pix2face_super pix2face python /pix2face_super/scripts/estimate_pose_example.py
+docker-compose -f ${DIR}/docker-compose.yml run pix2face python /pix2face_super/scripts/estimate_pose_example.py

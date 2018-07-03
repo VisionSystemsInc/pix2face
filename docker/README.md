@@ -1,7 +1,11 @@
 # Pix2Face Docker
 Instructions for running the pix2face pipeline from within the docker.
 
-### Clone the source code
+### Get docker-compose
+download [docker-compose](https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64) if you don't already have it, and place it in your `PATH`.
+
+
+### Clone the source code with submodules
 
 If you didn't use the --recursive flag when cloning, you'll need to run:
 ```bash

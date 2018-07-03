@@ -5,5 +5,5 @@ set -eu
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "DIR=${DIR}"
 PIX2FACE_SUPER_DIR="$(readlink -f ${DIR}/../)"
-
-docker run -it -v ${PIX2FACE_SUPER_DIR}:/pix2face_super pix2face /pix2face_super/docker/scripts/build_janus.bsh
+#docker run -it -v ${PIX2FACE_SUPER_DIR}:/pix2face_super pix2face /pix2face_super/docker/scripts/build_face3d.bsh
+docker-compose -f ${DIR}/docker-compose.yml run pix2face /pix2face_super/docker/scripts/build_face3d.bsh

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 set -eu
-USER_ID=$(id -u)
+export USER_ID=$(id -u)
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "DIR=${DIR}"
-SRC=${DIR}
 DOCKER_FILE=${DIR}/Dockerfile
 
-docker build -t pix2face --build-arg user_id=${USER_ID} -f ${DOCKER_FILE} .
+#docker build -t pix2face --build-arg user_id=${USER_ID} -f ${DOCKER_FILE} .
+docker-compose -f ${DIR}/docker-compose.yml build
