@@ -1,6 +1,6 @@
 version: "2.4"
 services:
-  pix2face: &pix2face
+  pix2face:
     build:
       context: .
       args:
@@ -16,10 +16,8 @@ services:
       - type: volume
         source: pix2face_install-cpu
         target: /pix2face_install
-    cap_add:
-      - SYS_PTRACE  # for gdb
   pix2face-gpu:
-    <<: *pix2face
+    image: pix2face_gpu
     runtime: nvidia
     build:
       context: .

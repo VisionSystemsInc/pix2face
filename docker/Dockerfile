@@ -14,15 +14,16 @@ RUN yum install -y epel-release; \
     unzip wget \
     python36-devel \
     # OpenGL needed by face3d
-    #mesa-libEGL-devel.x86_64 mesa-libGL-devel.x86_64
     glew-devel glew \
-    #libXrandr-devel libXinerama-devel glfw-devel libXcursor-devel libXi-devel \
-    # janus builds both dlib and vxl. these both include (different) versions of
+    # face3d builds both dlib and vxl. these both include (different) versions of
     # the libjpeg source and will build it if the libjpeg library is not found,
     # which causes a "multiple definition of" symbol error.
     libjpeg-turbo-devel \
     # keep vxl from building an old version of libtiff from source
     libtiff-devel; \
+    if [ "${CUDA_VERSION+set}" != "set" ]; then \
+      yum install -y mesa-libEGL-devel mesa-common-dev libosmesa6-dev libglu1-mesa-dev; \
+    fi; \
     rm -rf /var/cache/yum/*
 
 # Install python packages in a virtualenv
@@ -31,7 +32,7 @@ RUN python36 -m venv /pix2face_venv; \
     set +u; \
     source /pix2face_venv/bin/activate; \
     pip install --upgrade pip; \
-    pip install numpy matplotlib Pillow scikit-image; \
+    pip install numpy matplotlib Pillow scikit-image opencv-python-headless; \
     if [ "${CUDA_VERSION+set}" == "set" ]; then \
       pip install http://download.pytorch.org/whl/cu91/torch-0.3.1-cp36-cp36m-linux_x86_64.whl; \
     else \
