@@ -37,7 +37,7 @@ git submodule update --init --recursive
 ### Run within the docker
 
 Note: If you want to run on the GPU, you'll need nvidia-docker.  Then change the docker image name from "pix2face" to "pix2face-gpu" within the docker scripts.
-That is, replace 
+That is, replace
 
 ```bash
 docker-compose run pix2face
@@ -48,6 +48,8 @@ with
 ```bash
 docker-compose run pix2face-gpu
 ```
+
+Rendering (i.e. anything that uses face3d.mesh_renderer) can in principle work without the GPU, but currently causes a segfault.  Use the gpu version for now if you need to render images.
 
 #### Pose Estimation
 ```bash
