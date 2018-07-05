@@ -22,7 +22,7 @@ RUN yum install -y epel-release; \
     # keep vxl from building an old version of libtiff from source
     libtiff-devel; \
     if [ "${CUDA_VERSION+set}" != "set" ]; then \
-      yum install -y mesa-libEGL-devel mesa-libOSMesa-devel mesa-libGLES-devel mesa-libGLU-devel; \
+      yum install -y mesa-libOSMesa-devel mesa-libGLES-devel mesa-libGLU-devel; \
     fi; \
     rm -rf /var/cache/yum/*
 
