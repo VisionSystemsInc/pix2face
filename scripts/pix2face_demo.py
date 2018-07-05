@@ -2,8 +2,7 @@
 
 import numpy as np
 import os
-import janus.pvr.python_util.geometry_utils as geometry_utils
-import janus.pvr.python_util.io_utils as io_utils
+import pix2face_estimation.geometry_utils as geometry_utils
 import face3d
 import vxl
 import pix2face
@@ -91,6 +90,6 @@ print('..Done.')
 # save out results
 output_dir = this_dir
 print('Saving results')
-io_utils.imwrite(img, os.path.join(output_dir, "image_original.jpg"))
-io_utils.imwrite(render_expr[:,:,0:3], os.path.join(output_dir, "image_expression_jitter.jpg"))
-io_utils.imwrite(render_rot[:,:,0:3], os.path.join(output_dir, "image_pose_jitter.jpg"))
+Image.fromarray(img).save(os.path.join(output_dir, "image_original.jpg"))
+Image.fromarray(render_expr[:,:,0:3]).save(os.path.join(output_dir, "image_expression_jitter.jpg"))
+Image.fromarray(render_rot[:,:,0:3]).save(os.path.join(output_dir, "image_pose_jitter.jpg"))

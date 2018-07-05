@@ -5,7 +5,6 @@ import time
 import numpy as np
 from PIL import Image
 from multiprocessing import Pool
-import janus.pvr.python_util.io_utils as io_utils
 import sys
 janus_root = os.environ.get('JANUS_ROOT')
 janus_data = os.environ.get('JANUS_DATA')
@@ -49,12 +48,12 @@ def process_line(line, jitterer):
         # print("%s already exists !" % output_f)
         return
     else:
-        image = io_utils.imread(chip_path)
+        image = np.array(Image.open(chip_path))
         coeffs = face3d.subject_perspective_sighting_coefficients(coeff_path)
         ims = jitterer.multiple_random_jitters([image], coeffs, N_jitters)
         for i, im in enumerate(ims):
             output_f = os.path.join(output_dir, "%s_jitter_%s.jpg" % (chipID, i))
-            io_utils.imwrite(im, output_f)
+            Image.fromarray(im).save(output_f)
             # print("%s written! " % output_f)
 
 

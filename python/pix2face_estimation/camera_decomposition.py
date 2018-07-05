@@ -1,7 +1,7 @@
 """ camera decomposition methods """
 import numpy as np
 import scipy.linalg
-from .python_util import geometry_utils
+from . import geometry_utils
 
 
 def decompose_affine(P, verbose=False):

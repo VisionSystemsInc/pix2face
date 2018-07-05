@@ -9,4 +9,3 @@ def get_mesh_renderer():
     if _mesh_renderer is None:
         _mesh_renderer = face3d.mesh_renderer()
     return _mesh_renderer
-print('yyy')
