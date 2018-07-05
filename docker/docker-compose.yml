@@ -11,10 +11,10 @@ services:
         source: ..
         target: /pix2face_super
       - type: volume
-        source: pix2face_build
+        source: pix2face_build-cpu
         target: /pix2face_build
       - type: volume
-        source: pix2face_install
+        source: pix2face_install-cpu
         target: /pix2face_install
     cap_add:
       - SYS_PTRACE  # for gdb
@@ -26,6 +26,18 @@ services:
       args:
         - from=nvidia/cudagl:9.1-devel-centos7
         - user_id=${USER_ID-1000}
+    volumes:
+      - type: bind
+        source: ..
+        target: /pix2face_super
+      - type: volume
+        source: pix2face_build-gpu
+        target: /pix2face_build
+      - type: volume
+        source: pix2face_install-gpu
+        target: /pix2face_install
 volumes:
-  pix2face_build:
-  pix2face_install:
+  pix2face_build-cpu:
+  pix2face_install-cpu:
+  pix2face_build-gpu:
+  pix2face_install-gpu:
