@@ -36,6 +36,19 @@ git submodule update --init --recursive
 
 ### Run within the docker
 
+Note: If you want to run on the GPU, you'll need nvidia-docker.  Then change the docker image name from "pix2face" to "pix2face-gpu" within the docker scripts.
+That is, replace 
+
+```bash
+docker-compose run pix2face
+```
+
+with
+
+```bash
+docker-compose run pix2face-gpu
+```
+
 #### Pose Estimation
 ```bash
 ./docker/run_pose_estimation.bsh <image_dir> <output_dir>
@@ -47,4 +60,3 @@ A single csv file (poses.csv) will be written to `<output_dir>` containing yaw, 
 ./docker/run_coeff_estimation.bsh <image_dir> <output_dir>
 ```
 One coefficients file per image in `<image_dir>` will be written to `<output_dir>`
-

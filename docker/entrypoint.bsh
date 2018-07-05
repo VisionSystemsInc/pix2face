@@ -1,4 +1,5 @@
 #!/bin/bash
 source /pix2face_venv/bin/activate
+gosu root chown pix2face_user /pix2face_build /pix2face_install
 # run the passed command inside the virtualenv
 exec "$@"

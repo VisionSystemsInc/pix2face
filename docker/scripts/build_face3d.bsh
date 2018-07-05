@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -eu
 
-cd /pix2face_super/docker
-mkdir -p build
-mkdir -p install
-cd build
-cmake3 -DPYTHON_SITE=/pix2face_super/docker/install /pix2face_super
+cd /pix2face_build
+cmake3 -DPYTHON_SITE=/pix2face_install /pix2face_super
 make -j install

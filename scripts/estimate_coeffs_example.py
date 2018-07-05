@@ -26,7 +26,7 @@ t0 = time.time()
 
 # estimate pose for all images in the list
 for img in imgs:
-   coeffs = pix2face_estimation.coefficient_estimation.estimate_coefficients(img, pix2face_net, pix2face_data, cuda_device)
+    coeffs = pix2face_estimation.coefficient_estimation.estimate_coefficients(img, pix2face_net, pix2face_data, cuda_device)
 
 t1 = time.time()
 total_elapsed = t1 - t0

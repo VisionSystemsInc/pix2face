@@ -7,6 +7,7 @@ import janus.pvr.python_util.io_utils as io_utils
 import face3d
 import vxl
 import pix2face
+from PIL import Image
 
 
 # Estimate PNCC and Offsets using pix2face network
@@ -42,10 +43,10 @@ subject_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_subject.npy
 expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
 
 # keep only the PCA components that we will be estimating
-subject_components = vxl.vnl_matrix(subject_components[0:num_subject_coeffs,:])
-expression_components = vxl.vnl_matrix(expression_components[0:num_expression_coeffs,:])
-subject_ranges = vxl.vnl_matrix(subject_ranges[0:num_subject_coeffs,:])
-expression_ranges = vxl.vnl_matrix(expression_ranges[0:num_expression_coeffs,:])
+subject_components = vxl.vnl.matrix(subject_components[0:num_subject_coeffs,:])
+expression_components = vxl.vnl.matrix(expression_components[0:num_expression_coeffs,:])
+subject_ranges = vxl.vnl.matrix(subject_ranges[0:num_subject_coeffs,:])
+expression_ranges = vxl.vnl.matrix(expression_ranges[0:num_expression_coeffs,:])
 
 # create rendering object (encapsulates OpenGL context)
 renderer = face3d.mesh_renderer()
@@ -80,7 +81,7 @@ render_expr = jitterer.render(coeffs.camera(0), coeffs.subject_coeffs(), new_exp
 
 
 # manually alter pose
-delta_R = vxl.vgl_rotation_3d(geometry_utils.Euler_angles_to_quaternion(np.pi/3, 0, 0, order='YXZ'))
+delta_R = vxl.vgl.rotation_3d(geometry_utils.Euler_angles_to_quaternion(np.pi/3, 0, 0, order='YXZ'))
 cam = coeffs.camera(0)
 new_R = cam.rotation * delta_R
 new_cam = face3d.perspective_camera_parameters(cam.focal_len, cam.principal_point, new_R, cam.translation, cam.nx, cam.ny)
