@@ -22,7 +22,8 @@ RUN yum install -y epel-release; \
     # keep vxl from building an old version of libtiff from source
     libtiff-devel; \
     if [ "${CUDA_VERSION+set}" != "set" ]; then \
-      yum install -y mesa-libOSMesa-devel mesa-libGLES-devel mesa-libGLU-devel; \
+      # install X11 libraries needed for face3d to build without EGL support
+      yum install -y libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel; \
     fi; \
     rm -rf /var/cache/yum/*
 
