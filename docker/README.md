@@ -32,6 +32,7 @@ git submodule update --init --recursive
 ```bash
 ./docker/build.bsh
 ```
+To build the gpu version, add the `--gpu` flag.
 
 
 ### Run within the docker
@@ -49,7 +50,9 @@ with
 docker-compose run pix2face-gpu
 ```
 
-Rendering (i.e. anything that uses face3d.mesh_renderer) can in principle work without the GPU, but currently causes a segfault.  Use the gpu version for now if you need to render images.
+The example scripts accept a `--gpu` flag to do this for you.
+
+Rendering (i.e. anything that uses face3d.mesh_renderer) can in principle work without the GPU, but currently fails to create a valid OpenGL context.  Use the gpu version for now if you need to render images.
 
 #### Pose Estimation
 ```bash
