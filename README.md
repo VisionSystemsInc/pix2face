@@ -72,7 +72,14 @@ cd ${PIX2FACE_SRC_DIR}
 
 
 ## Running (Native)
-The scripts directory contains several examples of pose and coefficient estimation. For example, to generate a CSV file `$POSE_CSV_FNAME` with yaw, pitch, and roll (in degrees) of every face image listed (one per line) in the text file `$IMAGE_PATHS_FILE`:
+To exercise the full pipeline, you can run the demo script:
+```bash
+python scripts/pix2face_demo.py
+```
+This will estimate face geometry and render images with new pose and expression in the scripts directory.
+
+
+The scripts directory also contains several examples of pose and coefficient estimation. For example, to generate a CSV file `$POSE_CSV_FNAME` with yaw, pitch, and roll (in degrees) of every face image listed (one per line) in the text file `$IMAGE_PATHS_FILE`:
 ``` bash
 python scripts/estimate_pose_batch.py $IMAGE_PATHS_FILE $POSE_CSV_FNAME
 ```
