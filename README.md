@@ -1,7 +1,7 @@
 # pix2face_super
 ## "Superproject" wrapping components of the complete pix2face pipeline, including:
    * The pix2face dense face alignment and 3D estimation network
-   * The camera/pose and face coefficient estimation contained in the Janus repository
+   * The camera/pose and face coefficient estimation contained in the face3d repository
 ![](pix2face_super_teaser.png "pix2face_teaser")
 
 ## Requirements
@@ -41,7 +41,11 @@ Note: Depending on the location of your graphics libraries, you may have to set 
 cmake -DCMAKE_PREFIX_PATH=/usr/lib64/nvidia $PIX2FACE_SRC_DIR
 ```
 
-Build the Janus binaries:
+By default, they will be installed in the active python site.  If you want to change this, add `-DPYTHON_SITE=${INSTALL_DIR}` to the cmake command line and add `${INSTALL_DIR}` to your `PYTHONPATH`.
+
+
+Build the face3d and vxl compiled python modules:
+
 ```bash
 make install
 ```
@@ -56,12 +60,12 @@ source ./pix2face_env.bsh
 Or, manually:
 
 ```bash
-export PYTHONPATH=$PIX2FACE_SRC_DIR/pix2face:$PIX2FACE_SRC_DIR/janus/python:$PIX2FACE_BUILD_DIR/janus/lib
+export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face:${PIX2FACE_SRC_DIR}/python
 ```
 
 Download the required data files to their correct locations by running the `download_data.bsh` script:
 ```bash
-cd $PIX2FACE_SRC_DIR
+cd ${PIX2FACE_SRC_DIR}
 ./download_data.bsh
 ```
 
