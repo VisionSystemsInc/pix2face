@@ -7,10 +7,11 @@
 ## Requirements
 You have two options for running: within a docker container, or natively on your system. The only requirement for the former is docker itself.  The requirements for building and running natively are:
 
-   * CMake (version 2.8.12 or higher)
-   * Python (versions 2.7 and 3.5 have been tested)
+   * CMake (version 3.10 or higher)
+   * Python (version 3.6 has been tested)
    * numpy, Pillow, scikit-image
-   * pytorch (version 0.3.0.post4 has been tested)
+   * pytorch (version 0.3.1 has been tested), including torchvision
+   * opencv (opencv-python-headless)
 
 Optional:
 
