@@ -19,7 +19,7 @@ num_threads = 4
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 this_dir = os.path.dirname(__file__)
-pvr_data_dir = os.path.join(this_dir,'../janus/components/pvr/data_3DMM')
+pvr_data_dir = os.path.join(this_dir,'../face3d/data_3DMM')
 
 # load the 3DMM data
 mm_data = pix2face_estimation.coefficient_estimation.load_pix2face_data(pvr_data_dir, num_subject_coeffs, num_expression_coeffs)

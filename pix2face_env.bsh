@@ -11,10 +11,8 @@ fi
 #export NVIDIA_LIB_DIR=/usr/lib64/nvidia
 
 # Update PYTHONPATH
-# janus python modules
-export PYTHONPATH="${PIX2FACE_SRC_DIR}"/janus/python:${PYTHONPATH}
+# pix2face_estimation python module
+export PYTHONPATH="${PIX2FACE_SRC_DIR}"/python:${PYTHONPATH}
 # pix2face
 export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face:$PYTHONPATH
-# compiled python modules
-export PYTHONPATH="${PIX2FACE_BUILD_DIR}"/janus/lib:$PYTHONPATH
-
+# Note: compiled face3d and vxl python modules will be installed to your python site.  If you want to change this, add -DPYTHON_SITE=${INSTALL_DIR} to the cmake command line.

@@ -27,7 +27,7 @@ offsets = outputs[0][1]
 print('..Done')
 
 
-pvr_data_dir = os.path.join(this_dir, '../janus/components/pvr/data_3DMM/')
+pvr_data_dir = os.path.join(this_dir, '../face3d/data_3DMM/')
 debug_dir = ''
 debug_mode = False
 

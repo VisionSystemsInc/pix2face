@@ -1,7 +1,6 @@
 """ This Script Demonstrates the basic image -> PNCC + offsets --> coefficient estimation --> 3D Jitter pipeline. """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 from PIL import Image, ImageFile
 import face3d
@@ -9,13 +8,20 @@ import vxl
 import pix2face
 import glob
 import skimage.external.tifffile as tifffile
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('input_dir')
+parser.add_argument('output_dir')
+args = parser.parse_args()
+
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # Estimate PNCC and Offsets using pix2face network
 
-data_dir = '/home/dec/mnt/fileserver/personal/max/file_transfer/samples'
-output_dir = '/home/dec/mnt/fileserver/personal/dec/ND_est_3D'
+data_dir = args.input_dir
+output_dir = args.output_dir
 img_filenames = glob.glob(data_dir + '/*.jpg')
 
 this_dir = os.path.dirname(__file__)
@@ -33,7 +39,7 @@ for img_fname in img_filenames:
     offsets = outputs[0][1]
     print('..Done')
 
-    pvr_data_dir = os.path.join(this_dir, '../janus/components/pvr/data_3DMM/')
+    pvr_data_dir = os.path.join(this_dir, '../face3d/data_3DMM/')
     debug_dir = ''
     debug_mode = False
 

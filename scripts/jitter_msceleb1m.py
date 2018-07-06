@@ -1,26 +1,29 @@
 import os
 import face3d
-from janus.openbr import readbinary
 import time
 import numpy as np
 from PIL import Image
 from multiprocessing import Pool
 import sys
-janus_root = os.environ.get('JANUS_ROOT')
-janus_data = os.environ.get('JANUS_DATA')
-pix2face_root = os.environ.get('PIX2FACE_SOURCE')
-pvr_data_path = os.path.join(pix2face_root, 'janus', 'components', 'pvr', 'data_3DMM')
+
+this_dir = os.path.dirname(__file__)
+pvr_data_path = os.path.join(this_dir,'../face3d/data_3DMM')
+
 if not os.path.isdir(pvr_data_path):
     print("%s does not exist!" % pvr_data_path)
     sys.exit()
+
 msceleb1m_coeffs_path = '/data3/data/msceleb1m/msceleb1m_filtered_plus_vggface2_coeffs.csv'
 msceleb1m_jitter_dir = '/data3/data/msceleb1m/msceleb1m_jitters'
-min_yaw = 30; max_yaw = 90
+
+min_yaw = 30
+max_yaw = 90
 egl_device = 5
 force_rewrite = False
 N_jitters = 1
-jobs = 4;
+jobs = 4
 print_rate = 1000
+
 
 def category_index(path):
     return os.path.basename(os.path.dirname(path))
@@ -63,7 +66,7 @@ def process_chunck(chunck):
     pid = os.getpid()
     for i, line in enumerate(chunck):
         process_line(line, profile_jitterer)
-        if i % print_rate ==0  and i != 0:
+        if i % print_rate ==0 and i != 0:
             t_end = time.time()
             duration = t_end - t_start
             speed = float(print_rate) / duration
