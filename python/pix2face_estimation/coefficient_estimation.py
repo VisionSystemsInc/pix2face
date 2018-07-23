@@ -80,14 +80,16 @@ def estimate_coefficients(image, pix2face_net, pix2face_data, cuda_device=0):
     return coeffs
 
 
-def estimate_coefficients_joint(images, pix2face_net, pix2face_data, cuda_device=0):
+def estimate_coefficients_joint(images, pix2face_net, pix2face_data, cuda_device=0, img_labels=None):
     """
     Estimate coefficients for multiple images.  A single set of subject coefficients
     will be estimated, and results returned in a single object.
     """
     results = pix2face.test.test(pix2face_net, images, cuda_device=cuda_device)
     PNCCs, offsets = zip(*results)
-    img_labels = ['img%d' % i for i in len(images)]
+    if img_labels is None:
+        img_labels = ['img%d' % i for i in range(len(images))]
+    assert len(img_labels) == len(images)
 
     if cuda_device is not None:
         face3d.set_cuda_device(cuda_device)
@@ -98,7 +100,7 @@ def estimate_coefficients_joint(images, pix2face_net, pix2face_data, cuda_device
     return coeffs
 
 
-def estimate_coefficients_batch(images, pix2face_net, pix2face_data, cuda_device=0):
+def estimate_coefficients_batch(images, pix2face_net, pix2face_data, cuda_device=0, img_labels=None):
     """
     Estimate coefficients for multiple images, independently.
     One coeffs object per image will be returned.  If coeff estimation fails, None will be insretd into the list of coefficients.
@@ -106,11 +108,15 @@ def estimate_coefficients_batch(images, pix2face_net, pix2face_data, cuda_device
     results = pix2face.test.test(pix2face_net, images, cuda_device=cuda_device)
     coeffs_list = []
 
+    if img_labels is None:
+        img_labels = ['img%d' % i for i in range(len(images))]
+    assert len(img_labels) == len(images)
+
     if cuda_device is not None:
         face3d.set_cuda_device(cuda_device)
 
-    for PNCC, offsets in results:
-        coeffs, result = pix2face_data.coeff_estimator.estimate_coefficients_perspective(['img0'], [PNCC,], [offsets,])
+    for (PNCC, offsets), img_label in zip(results, img_labels):
+        coeffs, result = pix2face_data.coeff_estimator.estimate_coefficients_perspective([img_label,], [PNCC,], [offsets,])
         if not result.success:
             coeffs_list.append(None)
         else:
