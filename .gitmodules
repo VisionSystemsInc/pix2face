@@ -1,9 +1,6 @@
 [submodule "pix2face"]
 	path = pix2face
 	url = git@github.com:stresearch/pix2face.git
-[submodule "dlib"]
-	path = dlib
-	url = git@github.com:davisking/dlib.git
 [submodule "EGL-Registry"]
 	path = EGL-Registry
 	url = git@github.com:KhronosGroup/EGL-Registry.git
