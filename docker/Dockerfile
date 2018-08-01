@@ -7,8 +7,11 @@ RUN yum groupinstall -y "Development Tools"; \
     rm -rf /var/cache/yum/*
 
 RUN yum install -y epel-release; \
+    yum install -y centos-release-scl scl-utils; \
     yum install -y \
     ca-certificates which cmake3 \
+    # Centos 7 default gcc is too old to be compatible with pytorch pybind11 module
+    devtoolset-7 \
     openblas-devel \
     python-virtualenv \
     unzip wget \
@@ -35,9 +38,9 @@ RUN python36 -m venv /pix2face_venv; \
     pip install --upgrade pip; \
     pip install numpy matplotlib Pillow scikit-image opencv-python-headless; \
     if [ "${CUDA_VERSION+set}" == "set" ]; then \
-      pip install http://download.pytorch.org/whl/cu91/torch-0.3.1-cp36-cp36m-linux_x86_64.whl; \
+      pip install http://download.pytorch.org/whl/cu92/torch-0.4.1-cp36-cp36m-linux_x86_64.whl; \
     else \
-      pip install http://download.pytorch.org/whl/cpu/torch-0.3.1-cp36-cp36m-linux_x86_64.whl; \
+      pip install http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl; \
     fi; \
     pip install torchvision
 

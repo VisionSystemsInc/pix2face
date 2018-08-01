@@ -22,7 +22,7 @@ services:
     build:
       context: .
       args:
-        - from=nvidia/cudagl:9.1-devel-centos7
+        - from=nvidia/cudagl:9.2-devel-centos7
         - user_id=${USER_ID-1000}
     volumes:
       - type: bind

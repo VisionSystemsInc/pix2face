@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+# python bindings must be built with newer gcc to be compatible with pytorch 0.4.1
+source scl_source enable devtoolset-7
 set -eu
-
 cd /pix2face_build
+gcc --version
 cmake3 -DPYTHON_SITE=/pix2face_install /pix2face_super
 make -j install
