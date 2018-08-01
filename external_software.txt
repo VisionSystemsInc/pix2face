@@ -1,0 +1,33 @@
+external/glad_out
+OpenGL headers files generated automatically by glad (https://github.com/Dav1dde/glad) software.  glad itself is licensed under MIT license, but generated files are in public domain (as per glad's documentation.)
+
+external/dlib
+Dlib computer vision and machine learning library (dlib.net)
+Boost Software License, Version 1.0
+external/dlib/dlib/LICENSE.txt
+
+
+external/pybind11
+Pybind11 library for wrapping C++ code with python bindings.
+"BSD-Style license":  copyright notice must be distributed with source and binaries.
+external/pybind11/LICENSE
+
+
+external/vxl
+VXL computer vision libraries.
+BSD-Style license: copyright notice must be distributed with source and binaries.
+external/vxl/core/vxl_copyright.h
+
+
+external/libigl
+C++ geometry processing library
+From README.txt:
+libigl is primarily MPL2(http://www.mozilla.org/MPL/2.0/) licensed. Some files contain third-party code under other licenses. We're currently in the processes of identifying these and marking appropriately.
+
+
+external/libigl/external/eigen
+Eigen Linear Algebra library
+Eigen is primarily MPL2 licensed.
+Some files contain third-party code under LPGL licenses, but these files are excluded from compilation via the "-DEIGEN_MPL2_ONLY" compiler flag, which is set in face3d/CMakeLists.txt
+
+
