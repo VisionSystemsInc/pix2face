@@ -12,3 +12,4 @@ cd "$DIR"/pix2face/data/models
 #wget https://www.dropbox.com/s/b0byw0lb3oecv37/pix2face_unet_cuda75.pt
 #wget https://www.dropbox.com/s/gg88rbigj1ef4af/pix2face_unet_cuda80.pt
 wget https://www.dropbox.com/s/8c059nuo1i3cs43/pix2face_unet_v10.pt
+wget https://www.dropbox.com/s/qnpvwu67f7704wf/pix2face_unet_v10_pytorch0.4_cpu.pt
