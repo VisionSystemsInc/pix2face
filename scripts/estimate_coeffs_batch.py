@@ -9,7 +9,7 @@ import pix2face_estimation.coefficient_estimation
 from torch.multiprocessing import Pool
 
 # set cuda_device to an integer value to run on a GPU, set to None to run on CPU
-cuda_device = None
+cuda_device = 0
 
 num_subject_coeffs=30
 num_expression_coeffs=20
@@ -24,15 +24,13 @@ pvr_data_dir = os.path.join(this_dir,'../face3d/data_3DMM')
 # load the 3DMM data
 mm_data = pix2face_estimation.coefficient_estimation.load_pix2face_data(pvr_data_dir, num_subject_coeffs, num_expression_coeffs)
 
+
 def process_chunk(fnames):
     # load the pix2face network
     pix2face_net = pix2face.test.load_pretrained_model(cuda_device=cuda_device)
-    images = []
-    for img_fname in fnames:
-        img = np.array(Image.open(img_fname))
-        images.append(img)
+    images = [np.array(Image.open(f)) for f in fnames]
 
-    coeffs_list = pix2face_estimation.coefficient_estimation.estimate_coefficients_batch(images, pix2face_net, mm_data, cuda_device=cuda_device)
+    coeffs_list = pix2face_estimation.coefficient_estimation.estimate_coefficients_batch(images, pix2face_net, mm_data, cuda_device=cuda_device, img_labels=fnames)
     assert len(coeffs_list) == len(fnames)
     for coeffs, img_fname in zip(coeffs_list, fnames):
         print(img_fname)
@@ -44,6 +42,7 @@ def process_chunk(fnames):
         coeffs.save(output_fname)
     return
 
+
 def main(input_fname, output_dir):
     # open input file, read one filename per line
     img_fnames = []
@@ -53,7 +52,7 @@ def main(input_fname, output_dir):
             img_fnames.append(img_fname)
     print('Read %d image filenames' % len(img_fnames))
 
-    chunk_size = 64
+    chunk_size = 128
     chunks = [img_fnames[i:i+chunk_size] for i in range(0,len(img_fnames),chunk_size)]
     if num_threads > 1:
         pool = Pool(num_threads)
