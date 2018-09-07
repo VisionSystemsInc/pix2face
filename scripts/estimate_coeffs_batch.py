@@ -14,6 +14,9 @@ cuda_device = 0
 num_subject_coeffs=30
 num_expression_coeffs=20
 
+#num_dirs_in_id = 3  #  /a/b/c.jpg -> a_b_c_coeffs.txt
+num_dirs_in_id = 1  # /a/b/c.jpg -> c_coeffs.txt
+
 num_threads = 4
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -37,7 +40,8 @@ def process_chunk(fnames):
         if coeffs is None:
             print('Failed to estimate coefficients for ' + img_fname)
             continue
-        basename = os.path.splitext(os.path.basename(img_fname))[0]
+        splitpath = os.path.normpath(img_fname).split(os.sep)
+        basename = os.path.splitext('_'.join(splitpath[-num_dirs_in_id:]))[0]
         output_fname = os.path.join(output_dir, basename + '_coeffs.txt')
         coeffs.save(output_fname)
     return
@@ -49,6 +53,9 @@ def main(input_fname, output_dir):
     with open(input_fname, 'r') as ifd:
         for line in ifd:
             img_fname = line.strip()
+            # handle CSVs where the first column is the filename.
+            # This will obviously break if the filenames contain commas.
+            img_fname = img_fname.split(',')[0]
             img_fnames.append(img_fname)
     print('Read %d image filenames' % len(img_fnames))
 
