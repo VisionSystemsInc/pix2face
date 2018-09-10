@@ -13,10 +13,10 @@ MAX_SUBJECT_COEFFS = 199
 MAX_EXPRESSION_COEFFS = 29
 
 
-Pix2FaceData = namedtuple('Pix2FaceData',['head_mesh','subject_components','expression_components','subject_ranges','expression_ranges', 'coeff_estimator'])
+Pix2FaceData = namedtuple('Pix2FaceData',['head_mesh','subject_components','expression_components','subject_ranges','expression_ranges', 'coeff_estimator', 'use_offsets'])
 
 
-def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=MAX_SUBJECT_COEFFS, num_expression_coeffs=MAX_EXPRESSION_COEFFS):
+def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=MAX_SUBJECT_COEFFS, num_expression_coeffs=MAX_EXPRESSION_COEFFS, use_offsets_for_estimation=True):
     """
     Load PCA components and ranges.
     Returns a structure containing the following  matrices loaded as instances of vxl.vnl_matrix
@@ -47,17 +47,25 @@ def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=MAX_SUBJECT_COEFFS,
     debug_mode = False
     debug_dir = ""
 
-    coeff_estimator = \
-        face3d.media_coefficient_from_PNCC_and_offset_estimator(head_mesh,
-                                                                subject_components, expression_components,
-                                                                subject_ranges, expression_ranges,
-                                                                debug_mode, debug_dir)
+    if use_offsets_for_estimation:
+        coeff_estimator = \
+            face3d.media_coefficient_from_PNCC_and_offset_estimator(head_mesh,
+                                                                    subject_components, expression_components,
+                                                                    subject_ranges, expression_ranges,
+                                                                    debug_mode, debug_dir)
+    else:
+        coeff_estimator = \
+            face3d.media_coefficient_from_PNCC_estimator(head_mesh,
+                                                         subject_components, expression_components,
+                                                         subject_ranges, expression_ranges,
+                                                         debug_mode, debug_dir)
 
     # return in MMData structure
     return Pix2FaceData(head_mesh=head_mesh,
                         subject_components=subject_components, subject_ranges=subject_ranges,
                         expression_components=expression_components, expression_ranges=expression_ranges,
-                        coeff_estimator=coeff_estimator)
+                        coeff_estimator=coeff_estimator,
+                        use_offsets=use_offsets_for_estimation)
 
 
 class CoefficientEstimationError(RuntimeError):
@@ -74,7 +82,10 @@ def estimate_coefficients(image, pix2face_net, pix2face_data, cuda_device=0):
     if cuda_device is not None:
         face3d.set_cuda_device(cuda_device)
 
-    coeffs, result = pix2face_data.coeff_estimator.estimate_coefficients_perspective(['img0'], [PNCC,], [offsets,])
+    est_args = [[PNCC,],]
+    if pix2face_data.use_offsets:
+        est_args.append([offsets,])
+    coeffs, result = pix2face_data.coeff_estimator.estimate_coefficients_perspective(['img0'], *est_args)
     if not result.success:
         raise CoefficientEstimationError("Coefficient Estimation Failed")
     return coeffs
