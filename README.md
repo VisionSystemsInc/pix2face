@@ -1,7 +1,8 @@
-# pix2face_super
-## "Superproject" wrapping components of the complete pix2face pipeline, including:
-   * The pix2face dense face alignment and 3D estimation network
-   * The camera/pose and face coefficient estimation contained in the face3d repository
+# pix2face
+## The complete pix2face pipeline, including:
+   * The pix2face dense face alignment and 3D estimation network ([pix2face_net](https://github.com/VisionSystemsInc/pix2face_net))
+   * The camera/pose and face coefficient estimation contained in the [face3d](https://github.com/VisionSystemsInc/face3d) repository
+   * Rendering of novel viewpoints and expressions
 ![](pix2face_super_teaser.png "pix2face_teaser")
 
 ## Requirements
@@ -10,7 +11,7 @@ You have two options for running: within a docker container, or natively on your
    * CMake (version 3.10 or higher)
    * Python (version 3.6 has been tested)
    * numpy, Pillow, scikit-image
-   * pytorch (version 0.3.1 has been tested), including torchvision
+   * pytorch (version 0.4 has been tested), including torchvision
    * opencv (opencv-python-headless)
 
 Optional:
