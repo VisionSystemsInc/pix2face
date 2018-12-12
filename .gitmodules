@@ -1,9 +1,9 @@
-[submodule "pix2face"]
-	path = pix2face
-	url = git@github.com:stresearch/pix2face.git
+[submodule "pix2face_net"]
+	path = pix2face_net
+	url = git@github.com:visionsystemsinc/pix2face_net.git
 [submodule "EGL-Registry"]
 	path = EGL-Registry
 	url = git@github.com:KhronosGroup/EGL-Registry.git
 [submodule "face3d"]
 	path = face3d
-	url = git@bitbucket.org:visionsystemsinc/face3d.git
+	url = git@github.com:visionsystemsinc/face3d.git

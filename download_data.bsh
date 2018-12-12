@@ -8,7 +8,7 @@ cd face3d
 tar -xvf "$DIR"/data_3DMM_v2.tgz
 rm "$DIR"/data_3DMM_v2.tgz
 
-cd "$DIR"/pix2face/data/models
+cd "$DIR"/pix2face_net/data/models
 #wget https://www.dropbox.com/s/b0byw0lb3oecv37/pix2face_unet_cuda75.pt
 #wget https://www.dropbox.com/s/gg88rbigj1ef4af/pix2face_unet_cuda80.pt
 wget https://www.dropbox.com/s/8c059nuo1i3cs43/pix2face_unet_v10.pt
