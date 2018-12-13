@@ -28,7 +28,7 @@ See the [README.md](./docker/README.md) in the docker directory of this reposito
 Clone this repository to `$PIX2FACE_SRC_DIR`. If you did not clone recursively, you'll need to run:
 ```bash
 cd $PIX2FACE_SRC_DIR
-git submodule update --init --recursive
+git submodule update --init --recursive --progress
 ```
 
 Create a build directory and run Cmake:
@@ -43,7 +43,7 @@ Note: Depending on the location of your graphics libraries, you may have to set 
 cmake -DCMAKE_PREFIX_PATH=/usr/lib64/nvidia $PIX2FACE_SRC_DIR
 ```
 
-By default, they will be installed in the active python site.  If you want to change this, add `-DPYTHON_SITE=${INSTALL_DIR}` to the cmake command line and add `${INSTALL_DIR}` to your `PYTHONPATH`.
+By default, the compiled python modules will be installed in the active python site.  If you want to change this, add `-DPYTHON_SITE=${INSTALL_DIR}` to the cmake command line and add `${INSTALL_DIR}` to your `PYTHONPATH`.
 
 
 Build the face3d and vxl compiled python modules:
