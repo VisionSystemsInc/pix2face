@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+cd /pix2face/build
+rm -rf *
+source /pix2face/venv/bin/activate
+cmake /pix2face/face3d/ -DEGL_INCLUDE_DIR=/pix2face/EGL-Registry/api -DPYTHON_SITE=/pix2face/install/python -DCMAKE_INSTALL_PREFIX=/pix2face/install -GNinja
+ninja install

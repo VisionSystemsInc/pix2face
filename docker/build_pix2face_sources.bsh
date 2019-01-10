@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eu
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PIX2FACE_IMAGE=pix2face
+docker-compose -f ${DIR}/docker-compose.yml run --rm \
+               -e user_id=$(id -u $(whoami)) \
+               -e USER=pix2face_user \
+               $PIX2FACE_IMAGE \
+               /pix2face/docker/scripts/build_pix2face.bsh
