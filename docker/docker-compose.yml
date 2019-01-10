@@ -1,41 +1,38 @@
-version: "2.4"
+version: "2.3"
 services:
-  pix2face:
+  pix2face: &pix2face
     build:
       context: .
-      args:
-        - user_id=${USER_ID-1000}
-    image: pix2face
+      dockerfile: Dockerfile
+    image: pix2face:pix2face_main
+    environment:
+      - DOCKER_USERNAME=pix2face_user
+      - DISPLAY
+      - MXNET_CUDNN_AUTOTUNE_DEFAULT=0
+      - MXNET_ENABLE_GPU_P2P=0
+      - PYTHONPATH=/pix2face/install/python
     volumes:
+      - type: volume
+        source: home
+        target: /home/pix2face_user
       - type: bind
         source: ..
-        target: /pix2face_super
+        target: /pix2face
       - type: volume
-        source: pix2face_build-cpu
-        target: /pix2face_build
+        source: pix2face_build
+        target: /pix2face/build
       - type: volume
-        source: pix2face_install-cpu
-        target: /pix2face_install
-  pix2face-gpu:
-    image: pix2face_gpu
+        source: pix2face_venv
+        target: /pix2face/venv
+      - type: volume
+        source: pix2face_install
+        target: /pix2face/install
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
     runtime: nvidia
-    build:
-      context: .
-      args:
-        - from=nvidia/cudagl:9.2-devel-centos7
-        - user_id=${USER_ID-1000}
-    volumes:
-      - type: bind
-        source: ..
-        target: /pix2face_super
-      - type: volume
-        source: pix2face_build-gpu
-        target: /pix2face_build
-      - type: volume
-        source: pix2face_install-gpu
-        target: /pix2face_install
 volumes:
-  pix2face_build-cpu:
-  pix2face_install-cpu:
-  pix2face_build-gpu:
-  pix2face_install-gpu:
+  home:
+  pix2face_build:
+  pix2face_install:
+  pix2face_venv:

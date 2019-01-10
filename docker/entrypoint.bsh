@@ -1,5 +1,11 @@
 #!/bin/bash
-source /pix2face_venv/bin/activate
-gosu root chown pix2face_user /pix2face_build /pix2face_install
+set -eu
 # run the passed command inside the virtualenv
-exec "$@"
+useradd -s /bin/bash -N -u ${user_id-1000} -o pix2face_user
+chown -R pix2face_user /pix2face/build
+chown -R pix2face_user /pix2face/install
+chown -R pix2face_user /pix2face/venv
+chown -R pix2face_user /home/pix2face_user/
+source /pix2face/venv/bin/activate
+cd /home/pix2face_user
+exec gosu pix2face_user "$@"
