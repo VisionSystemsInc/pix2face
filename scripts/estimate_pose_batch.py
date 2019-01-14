@@ -5,9 +5,10 @@ import numpy as np
 from PIL import Image, ImageFile
 import pix2face.test
 import pix2face_estimation.camera_estimation
-
+import os
 # Set this to an integer to run on a CUDA device, None to run on the CPU.
-cuda_device = 0
+
+cuda_device = None if os.environ.get("CPU_ONLY") else 0
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 

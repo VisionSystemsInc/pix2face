@@ -23,16 +23,15 @@ git submodule update --init --recursive
 ### Build the docker image
 
 ```bash
-./docker/docker-build.bsh
+./docker/build_docker_image.bsh
 ```
 
 
 ### Build the software within the docker
 
 ```bash
-./docker/build.bsh
+./docker/build_pix2face_sources.bsh
 ```
-To build the gpu version, add the `--gpu` flag.
 
 
 ### Run within the docker
