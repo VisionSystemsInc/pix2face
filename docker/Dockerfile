@@ -2,7 +2,7 @@ FROM nvidia/cudagl:10.0-devel-ubuntu18.04
 ARG cpu_image=0
 ENV CUDNN_VERSION 7.4.1.5
 SHELL ["/usr/bin/env", "bash", "-euxvc"]
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends\
             libcudnn7=$CUDNN_VERSION-1+cuda10.0 \
             libcudnn7-dev=$CUDNN_VERSION-1+cuda10.0 && \
         apt-mark hold libcudnn7
@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Python env
 ADD requirements.txt /pix2face/requirements.txt
 ENV CPU_ONLY=${cpu_image}
-RUN echo "CPU ONLY = ${CPU_ONLY}"
 RUN python3 -m venv /pix2face/venv;\
     # activate doesn't like u flag
     set +u; \
