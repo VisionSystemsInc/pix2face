@@ -37,8 +37,6 @@ Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. 
 
 ### Run interactively an instance of pix2face
 
-Note: If you want to run on the GPU, you'll need nvidia-docker.  Then change the docker image name from "pix2face" to "pix2face-gpu" within the docker scripts.
-That is, replace
 
 ```bash
 ./docker/run_pix2face_interactively.bsh [--cpu-only] [INSTANCE_NAME]
