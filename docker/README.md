@@ -21,46 +21,46 @@ git submodule update --init --recursive
 
 
 ### Build the docker image
+Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. This flag is supported by all scripts below.
 
 ```bash
-./docker/build_docker_image.bsh
+./docker/build_docker_image.bsh [--cpu-only]
 ```
 
 
 ### Build the software within the docker
 
 ```bash
-./docker/build_pix2face_sources.bsh
+./docker/build_pix2face_sources.bsh [--cpu-only]
 ```
 
 
-### Run within the docker
+### Run interactively an instance of pix2face
 
 Note: If you want to run on the GPU, you'll need nvidia-docker.  Then change the docker image name from "pix2face" to "pix2face-gpu" within the docker scripts.
 That is, replace
 
 ```bash
-docker-compose run pix2face
+./docker/run_pix2face_interactively.bsh [--cpu-only] [INSTANCE_NAME]
 ```
-
-with
-
-```bash
-docker-compose run pix2face-gpu
-```
-
-The example scripts accept a `--gpu` flag to do this for you.
 
 Rendering (i.e. anything that uses face3d.mesh_renderer) can in principle work without the GPU, but currently fails to create a valid OpenGL context.  Use the gpu version for now if you need to render images.
 
+#### Examples: Pose and Coefficient Estimation
+After a succseful build these two examples should work
+```bash
+./docker/run_pose_estimation_example.bsh [--cpu-only]
+./docker/run_coeff_estimation_example.bsh [--cpu-only]
+```
+
 #### Pose Estimation
 ```bash
-./docker/run_pose_estimation.bsh <image_dir> <output_dir>
+./docker/run_pose_estimation.bsh <image_dir> <output_dir> [--cpu-only]
 ```
 A single csv file (poses.csv) will be written to `<output_dir>` containing yaw, pitch, and roll for each image in `<image_dir>`
 
 #### Coefficient Estimation
 ```bash
-./docker/run_coeff_estimation.bsh <image_dir> <output_dir>
+./docker/run_coeff_estimation.bsh <image_dir> <output_dir> [--cpu-only]
 ```
 One coefficients file per image in `<image_dir>` will be written to `<output_dir>`
