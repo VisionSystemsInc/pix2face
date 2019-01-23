@@ -7,12 +7,12 @@ import pix2face.test
 import pix2face_estimation.camera_estimation
 
 # Set this to an integer value to run on a CUDA device, None for CPU.
-cuda_device = None
+cuda_device = None if os.environ.get("CPU_ONLY") else 0
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 this_dir = os.path.dirname(__file__)
-img_fname = os.path.join(this_dir, '../pix2face/data', 'CASIA_0000107_004.jpg')
+img_fname = os.path.join(this_dir, '../pix2face_net/data', 'CASIA_0000107_004.jpg')
 img = np.array(Image.open(img_fname))
 
 # create a list of identical images for the purpose of testing timing

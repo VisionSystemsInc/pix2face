@@ -14,7 +14,7 @@ from PIL import Image
 cuda_device = 0
 
 this_dir = os.path.dirname(__file__)
-pix2face_data_dir = os.path.join(this_dir, '../pix2face/data/')
+pix2face_data_dir = os.path.join(this_dir, '../pix2face_net/data/')
 
 model = pix2face.test.load_pretrained_model(cuda_device=cuda_device)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script will download the needed data and place it into the correction locations
+# This script will download the needed data and place it into the correct locations
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR"

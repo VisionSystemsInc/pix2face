@@ -1,46 +1,29 @@
-ARG from=centos:7.2.1511
-FROM ${from}
-LABEL maintainer="Daniel Crispell <dan@visionsystemsinc.com>"
+FROM nvidia/cudagl:9.2-devel-ubuntu18.04
+ARG cpu_image=0
+ENV CUDNN_VERSION 7.4.1.5
 SHELL ["/usr/bin/env", "bash", "-euxvc"]
+RUN apt-get update && apt-get install -y --no-install-recommends\
+            libcudnn7=$CUDNN_VERSION-1+cuda9.2 \
+            libcudnn7-dev=$CUDNN_VERSION-1+cuda9.2 && \
+        apt-mark hold libcudnn7
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget git unzip python3-dev cmake ninja-build libz-dev libssl-dev libboost-dev libglew-dev libtiff-dev python3-venv libjpeg-turbo8-dev \
+        openssh-client libopenblas-dev; \
+        rm -rf /var/lib/apt/lists/*
 
-RUN yum groupinstall -y "Development Tools"; \
-    rm -rf /var/cache/yum/*
-
-RUN yum install -y epel-release; \
-    yum install -y centos-release-scl scl-utils; \
-    yum install -y \
-    ca-certificates which cmake3 \
-    # Centos 7 default gcc is too old to be compatible with pytorch pybind11 module
-    devtoolset-7 \
-    openblas-devel \
-    python-virtualenv \
-    unzip wget \
-    python36-devel \
-    # OpenGL needed by face3d
-    glew-devel glew \
-    # face3d builds both dlib and vxl. these both include (different) versions of
-    # the libjpeg source and will build it if the libjpeg library is not found,
-    # which causes a "multiple definition of" symbol error.
-    libjpeg-turbo-devel \
-    # keep vxl from building an old version of libtiff from source
-    libtiff-devel; \
-    if [ "${CUDA_VERSION+set}" != "set" ]; then \
-      # install X11 libraries needed for face3d to build without EGL support
-      yum install -y libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel; \
-    fi; \
-    rm -rf /var/cache/yum/*
-
-# Install python packages in a virtualenv
-RUN python36 -m venv /pix2face_venv; \
+# Python env
+ADD requirements.txt /pix2face/requirements.txt
+ENV CPU_ONLY=${cpu_image}
+RUN python3 -m venv /pix2face/venv;\
     # activate doesn't like u flag
     set +u; \
-    source /pix2face_venv/bin/activate; \
+    source /pix2face/venv/bin/activate; \
     pip install --upgrade pip; \
-    pip install numpy matplotlib Pillow scikit-image opencv-python-headless; \
-    if [ "${CUDA_VERSION+set}" == "set" ]; then \
-      pip install http://download.pytorch.org/whl/cu92/torch-0.4.1-cp36-cp36m-linux_x86_64.whl; \
+    pip install -r /pix2face/requirements.txt; \
+    if [ $CPU_ONLY -eq 0 ]; then \
+      pip install torch; \
     else \
-      pip install http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl; \
+      pip install https://download.pytorch.org/whl/cpu/torch-1.0.0-cp36-cp36m-linux_x86_64.whl; \
     fi; \
     pip install torchvision
 
@@ -49,16 +32,7 @@ RUN wget -O /usr/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOS
     chmod u+s /usr/bin/gosu; \
     chmod +x /usr/bin/gosu
 
-ARG user_id=1000
-RUN useradd -m -s /bin/bash -N -u ${user_id} pix2face_user
-
-USER pix2face_user
-
-WORKDIR /pix2face_super
-
-ENV PYTHONPATH /pix2face_super/pix2face:/pix2face_install:/pix2face_super/python
-
 COPY entrypoint.bsh /entrypoint.bsh
+RUN gosu root chmod 755 /entrypoint.bsh
 ENTRYPOINT ["/entrypoint.bsh"]
-
 CMD bash

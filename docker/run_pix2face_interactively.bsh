@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "DIR=${DIR}"
+if [[ "$#" -gt "0"   &&  "$1" == "--cpu-only"  ]]; then
+  PIX2FACE_IMAGE=pix2face_cpu
+else
+  PIX2FACE_IMAGE=pix2face
+fi
+
+if [[ ("$#" -eq "1"   &&  "$1" != "--cpu-only" )  ]]; then
+  INSTANCE_NAME=$1
+elif [[ ( "$#" -gt "1"   &&  "$1" == "--cpu-only") ]]; then
+  INSTANCE_NAME=$2
+else
+  INSTANCE_NAME=pix2face_instance
+fi
+echo "Running $PIX2FACE_IMAGE docker image with name $INSTANCE_NAME"
+docker-compose -f ${DIR}/docker-compose.yml run --rm  --service-ports --name ${INSTANCE_NAME} \
+                   -e user_id=$(id -u $(whoami)) \
+                   -e USER=pix2face_user \
+                   -e DISPLAY=${DISPLAY} $PIX2FACE_IMAGE

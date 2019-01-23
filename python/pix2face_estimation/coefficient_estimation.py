@@ -80,6 +80,7 @@ def estimate_coefficients(image, pix2face_net, pix2face_data, cuda_device=0, img
     PNCC, offsets = pix2face.test.test(pix2face_net, image, cuda_device=cuda_device)
 
     if cuda_device is not None:
+        print("Setting face3d cuda_device to", cuda_device)
         face3d.set_cuda_device(cuda_device)
     if img_label is None:
         img_label = 'img0'
@@ -119,7 +120,7 @@ def estimate_coefficients_joint(images, pix2face_net, pix2face_data, cuda_device
 def estimate_coefficients_batch(images, pix2face_net, pix2face_data, cuda_device=0, img_labels=None):
     """
     Estimate coefficients for multiple images, independently.
-    One coeffs object per image will be returned.  If coeff estimation fails, None will be insretd into the list of coefficients.
+    One coeffs object per image will be returned.  If coeff estimation fails, None will be inserted into the list of coefficients.
     """
     results = pix2face.test.test(pix2face_net, images, cuda_device=cuda_device)
     coeffs_list = []

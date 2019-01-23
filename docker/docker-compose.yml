@@ -1,41 +1,66 @@
-version: "2.4"
+version: "2.3"
 services:
-  pix2face:
+  pix2face: &pix2face
     build:
       context: .
-      args:
-        - user_id=${USER_ID-1000}
-    image: pix2face
-    volumes:
+      dockerfile: Dockerfile
+    image: pix2face:pix2face_main
+    environment:
+      - DOCKER_USERNAME=pix2face_user
+      - DISPLAY
+      - PYTHONPATH=/pix2face/install/python:/pix2face/pix2face_net/:/pix2face/python
+    volumes: &volumes
+      - type: volume
+        source: pix2face_home
+        target: /home/pix2face_user
       - type: bind
         source: ..
-        target: /pix2face_super
+        target: /pix2face
       - type: volume
-        source: pix2face_build-cpu
-        target: /pix2face_build
+        source: pix2face_build
+        target: /pix2face/build
       - type: volume
-        source: pix2face_install-cpu
-        target: /pix2face_install
-  pix2face-gpu:
-    image: pix2face_gpu
+        source: pix2face_venv
+        target: /pix2face/venv
+      - type: volume
+        source: pix2face_install
+        target: /pix2face/install
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
     runtime: nvidia
+  pix2face_cpu:
+    <<: *pix2face
+    image: pix2face:pix2face_cpu
     build:
       context: .
+      dockerfile: Dockerfile
       args:
-        - from=nvidia/cudagl:9.2-devel-centos7
-        - user_id=${USER_ID-1000}
+        - cpu_image=1
     volumes:
+      - type: volume
+        source: pix2face_home
+        target: /home/pix2face_user
       - type: bind
         source: ..
-        target: /pix2face_super
+        target: /pix2face
       - type: volume
-        source: pix2face_build-gpu
-        target: /pix2face_build
+        source: pix2face_build_cpu
+        target: /pix2face/build
       - type: volume
-        source: pix2face_install-gpu
-        target: /pix2face_install
+        source: pix2face_venv_cpu
+        target: /pix2face/venv
+      - type: volume
+        source: pix2face_install_cpu
+        target: /pix2face/install
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
 volumes:
-  pix2face_build-cpu:
-  pix2face_install-cpu:
-  pix2face_build-gpu:
-  pix2face_install-gpu:
+  pix2face_home:
+  pix2face_build:
+  pix2face_install:
+  pix2face_venv:
+  pix2face_build_cpu:
+  pix2face_install_cpu:
+  pix2face_venv_cpu:

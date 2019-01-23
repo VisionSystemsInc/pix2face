@@ -3,7 +3,7 @@
    * The pix2face dense face alignment and 3D estimation network ([pix2face_net](https://github.com/VisionSystemsInc/pix2face_net))
    * The camera/pose and face coefficient estimation contained in the [face3d](https://github.com/VisionSystemsInc/face3d) repository
    * Rendering of novel viewpoints and expressions
-![](pix2face_super_teaser.png "pix2face_teaser")
+![](pix2face_teaser.png "pix2face_teaser")
 
 ## Requirements
 You have two options for running: within a docker container, or natively on your system. The only requirement for the former is docker itself.  The requirements for building and running natively are:
