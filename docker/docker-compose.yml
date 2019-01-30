@@ -29,7 +29,7 @@ services:
         source: /tmp/.X11-unix
         target: /tmp/.X11-unix
     runtime: nvidia
-  pix2face_cpu:
+  pix2face_cpu: &pix2face_cpu
     <<: *pix2face
     image: pix2face:pix2face_cpu
     build:
@@ -56,6 +56,14 @@ services:
       - type: bind
         source: /tmp/.X11-unix
         target: /tmp/.X11-unix
+  pix2face_notebook:
+    <<: *pix2face
+    ports:
+      - 8885:8888
+  pix2face_notebook_cpu:
+    <<: *pix2face_cpu
+    ports:
+      - 8885:8888
 volumes:
   pix2face_home:
   pix2face_build:

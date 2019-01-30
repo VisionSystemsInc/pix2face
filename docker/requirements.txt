@@ -3,3 +3,5 @@ matplotlib
 Pillow
 scikit-image
 opencv-python-headless
+jupyterlab
+eos-py
