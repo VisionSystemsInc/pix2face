@@ -7,7 +7,13 @@ import pix2face.test
 import pix2face_estimation.coefficient_estimation
 
 # Set this to an integer value to run on a CUDA device, None for CPU.
-cuda_device = None if os.environ.get("CPU_ONLY") else 0
+cpu_only = int(os.environ.get("CPU_ONLY")) != 0
+cuda_device = None if cpu_only else 0
+if cpu_only:
+    print("Running on CPU")
+else:
+    print("Running on cuda device %s" % cuda_device)
+
 
 this_dir = os.path.dirname(__file__)
 img_fname = os.path.join(this_dir, '../pix2face_net/data', 'CASIA_0000107_004.jpg')

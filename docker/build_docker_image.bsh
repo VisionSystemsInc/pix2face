@@ -7,12 +7,15 @@ if [ "$#" -gt "0"  ] && [ "$1" == "--cpu-only" ]; then
         echo "Clearing python virtual environment from pix2face_cpu image"
         docker volume rm docker_pix2face_venv_cpu
     fi
-  PIX2FACE_IMAGE=pix2face_cpu
+    PIX2FACE_IMAGE=pix2face_cpu
+    NOTEBOOK_IMAGE=pix2face_notebook_cpu
 else
     if docker volume inspect docker_pix2face_venv > /dev/null 2>&1 ; then
         echo "Clearing python virtual environment from pix2face image"
         docker volume rm docker_pix2face_venv
     fi
-  PIX2FACE_IMAGE=pix2face
+    PIX2FACE_IMAGE=pix2face
+    NOTEBOOK_IMAGE=pix2face_notebook
 fi
 docker-compose -f ${DIR}/docker-compose.yml build ${PIX2FACE_IMAGE}
+docker-compose -f ${DIR}/docker-compose.yml build ${NOTEBOOK_IMAGE}

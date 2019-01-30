@@ -7,9 +7,12 @@ import pix2face.test
 import pix2face_estimation.camera_estimation
 import os
 # Set this to an integer to run on a CUDA device, None to run on the CPU.
-
-cuda_device = None if os.environ.get("CPU_ONLY") else 0
-
+cpu_only = int(os.environ.get("CPU_ONLY")) != 0
+cuda_device = None if cpu_only else 0
+if cpu_only:
+    print("Running on CPU")
+else:
+    print("Running on cuda device %s" % cuda_device)
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 

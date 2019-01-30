@@ -35,7 +35,7 @@ Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. 
 ```
 
 
-### Run interactively an instance of pix2face
+### Run bash inside a named pix2face container
 
 
 ```bash
@@ -62,3 +62,9 @@ A single csv file (poses.csv) will be written to `<output_dir>` containing yaw, 
 ./docker/run_coeff_estimation.bsh <image_dir> <output_dir> [--cpu-only]
 ```
 One coefficients file per image in `<image_dir>` will be written to `<output_dir>`
+
+#### Jupyter/IPython Notebook
+You can run the pix2face demo notebook on port 8885 of your machine with the command:
+```bash
+./docker/run_pix2face_notebook.bsh [--cpu-only]
+```

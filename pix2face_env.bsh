@@ -16,3 +16,6 @@ export PYTHONPATH="${PIX2FACE_SRC_DIR}"/python:${PYTHONPATH}
 # pix2face
 export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face:$PYTHONPATH
 # Note: compiled face3d and vxl python modules will be installed to your python site.  If you want to change this, add -DPYTHON_SITE=${INSTALL_DIR} to the cmake command line.
+
+# CPU Support only by default. Change to 0 to enable GPU
+export CPU_ONLY=1
