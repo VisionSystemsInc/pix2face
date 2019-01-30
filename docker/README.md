@@ -35,7 +35,7 @@ Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. 
 ```
 
 
-### Run bash inside a named instance of pix2face
+### Run bash inside a named pix2face container
 
 
 ```bash
