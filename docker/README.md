@@ -13,13 +13,6 @@ git submodule update --init --recursive
 ```
 
 
-### Download the datafiles
-
-```bash
-./download_data.bsh
-```
-
-
 ### Build the docker image
 Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. This flag is supported by all scripts below.
 
@@ -28,7 +21,7 @@ Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. 
 ```
 
 
-### Build the software within the docker
+### Build the software within the docker. This script will also download all required data files.
 
 ```bash
 ./docker/build_pix2face_sources.bsh [--cpu-only]

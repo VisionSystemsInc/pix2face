@@ -65,7 +65,7 @@ Or, manually:
 export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face:${PIX2FACE_SRC_DIR}/python
 ```
 
-Download the required data files to their correct locations by running the `download_data.bsh` script:
+Download the required data files to their correct locations by running the `download_data.bsh` script. Note that you will need the ```numpy``` and ```eos_py``` packages installed for the script to work correctly.
 ```bash
 cd ${PIX2FACE_SRC_DIR}
 ./download_data.bsh
