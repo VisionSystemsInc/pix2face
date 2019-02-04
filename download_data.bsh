@@ -12,14 +12,11 @@ wget --quiet --show-progress https://github.com/patrikhuber/eos/raw/master/share
 wget --quiet --show-progress https://github.com/patrikhuber/eos/raw/master/share/sfm_shape_3448.bin -O sfm_shape_3448.bin
 python3 $DIR/scripts/align_face_mesh.py
 retval=$?
-echo $retval
-if ! python3 $DIR/scripts/align_face_mesh.py > /dev/null 2>&1  ; then
+if [ $retval -ne 0 ] ; then
     echo "Failed to align the head mesh. Make sure numpy, eos_py are installed in your python3 environment!"
 else
     echo "Head mesh data aligned succesfully"
 fi
-#tar -xvf "$DIR"/data_3DMM_v3.tgz
-#rm "$DIR"/data_3DMM_v3.tgz
 
 cd "$DIR"/pix2face_net/data/models
 #wget https://www.dropbox.com/s/b0byw0lb3oecv37/pix2face_unet_cuda75.pt
