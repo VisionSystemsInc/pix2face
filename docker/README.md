@@ -19,9 +19,12 @@ Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. 
 ```bash
 ./docker/build_docker_image.bsh [--cpu-only]
 ```
+### Download the data
+```bash
+./docker/download_data_docker.bsh
+```
 
-
-### Build the software within the docker. This script will also download all required data files.
+### Build the software within the docker
 
 ```bash
 ./docker/build_pix2face_sources.bsh [--cpu-only]

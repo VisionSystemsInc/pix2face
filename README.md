@@ -30,6 +30,12 @@ Clone this repository to `$PIX2FACE_SRC_DIR`. If you did not clone recursively, 
 cd $PIX2FACE_SRC_DIR
 git submodule update --init --recursive --progress
 ```
+Activate your favorite python virtualenv if not using your system's python. This will ensure that the build process will link against the correct python libraries.
+
+Install the python requirements file.
+```bash
+pip install -r $PIX2FACE_SRC_DIR/requirements.txt
+```
 
 Create a build directory and run Cmake:
 ```bash
@@ -65,7 +71,7 @@ Or, manually:
 export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face:${PIX2FACE_SRC_DIR}/python
 ```
 
-Download the required data files to their correct locations by running the `download_data.bsh` script. Note that you will need the ```numpy``` and ```eos_py``` packages installed for the script to work correctly.
+Download the required data files to their correct locations by running the `download_data.bsh` script. Note that the ```numpy``` and ```eos_py``` packages are needed for the script to work correctly but they should already be in your python evironment if the requirements.txt file was succefully installed.
 ```bash
 cd ${PIX2FACE_SRC_DIR}
 ./download_data.bsh
