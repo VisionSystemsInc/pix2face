@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -eu
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if docker image inspect pix2face:pix2face_main> /dev/null 2>&1 ; then
+    PIX2FACE_IMAGE=pix2face
+elif docker image inspect pix2face:pix2face_cpu > /dev/null 2>&1 ; then
+    PIX2FACE_IMAGE=pix2face_cpu
+else
+  echo "No docker images exist! Run this script first: $DIR/build_docker_image.bsh"
+  exit 1
+fi
+docker-compose -f ${DIR}/docker-compose.yml run --rm \
+               -e user_id=$(id -u $(whoami)) \
+               -e USER=pix2face_user \
+               $PIX2FACE_IMAGE \
+               /pix2face/download_data.bsh

@@ -7,6 +7,7 @@ if [ "$#" -gt "0"  ] && [ "$1" == "--cpu-only" ]; then
 else
   PIX2FACE_IMAGE=pix2face
 fi
+
 docker-compose -f ${DIR}/docker-compose.yml run --rm \
                -e user_id=$(id -u $(whoami)) \
                -e USER=pix2face_user \

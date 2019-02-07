@@ -9,14 +9,11 @@ import face3d
 import pix2face.test
 from . import mesh_renderer
 
-MAX_SUBJECT_COEFFS = 199
-MAX_EXPRESSION_COEFFS = 29
-
 
 Pix2FaceData = namedtuple('Pix2FaceData',['head_mesh','subject_components','expression_components','subject_ranges','expression_ranges', 'coeff_estimator', 'use_offsets'])
 
 
-def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=MAX_SUBJECT_COEFFS, num_expression_coeffs=MAX_EXPRESSION_COEFFS, use_offsets_for_estimation=True):
+def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=None, num_expression_coeffs=None, use_offsets_for_estimation=True):
     """
     Load PCA components and ranges.
     Returns a structure containing the following  matrices loaded as instances of vxl.vnl_matrix
@@ -26,17 +23,17 @@ def load_pix2face_data(pvr_data_dir=None, num_subject_coeffs=MAX_SUBJECT_COEFFS,
         this_dir = os.path.dirname(__file__)
         pvr_data_dir = os.path.join(this_dir, '../../face3d/data_3DMM')
 
-    if num_subject_coeffs > MAX_SUBJECT_COEFFS:
-        raise ValueError("Maximum number of subject coefficients (%d) exceeded" % MAX_SUBJECT_COEFFS)
-    if num_expression_coeffs > MAX_EXPRESSION_COEFFS:
-        raise ValueError("Maximum number of expression coefficients (%d) exceeded" % MAX_EXPRESSION_COEFFS)
-
     # load data files as numpy arrays
     head_mesh = face3d.head_mesh(pvr_data_dir)
     subject_components = np.load(os.path.join(pvr_data_dir, 'pca_components_subject.npy'))
     expression_components = np.load(os.path.join(pvr_data_dir, 'pca_components_expression.npy'))
     subject_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_subject.npy'))
     expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
+
+    if num_subject_coeffs is None:
+        num_subject_coeffs = subject_components.shape[0]
+    if num_expression_coeffs is None:
+        num_expression_coeffs = expression_components.shape[0]
 
     # keep only needed rows of subject and expression matrices and convert to vnl matrices
     subject_components = vxl.vnl.matrix(subject_components[0:num_subject_coeffs,:])

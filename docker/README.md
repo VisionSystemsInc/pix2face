@@ -13,20 +13,16 @@ git submodule update --init --recursive
 ```
 
 
-### Download the datafiles
-
-```bash
-./download_data.bsh
-```
-
-
 ### Build the docker image
 Default build is with GPU support. Use the ```--cpu-only``` flag to disable it. This flag is supported by all scripts below.
 
 ```bash
 ./docker/build_docker_image.bsh [--cpu-only]
 ```
-
+### Download the data
+```bash
+./docker/download_data_docker.bsh
+```
 
 ### Build the software within the docker
 

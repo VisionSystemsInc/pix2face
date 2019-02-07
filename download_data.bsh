@@ -3,13 +3,19 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR"
-wget https://www.dropbox.com/s/fo8k0ha2pqicilu/data_3DMM_v2.tgz
+echo "Downloading Morphable Head Model"
 cd face3d
-tar -xvf "$DIR"/data_3DMM_v2.tgz
-rm "$DIR"/data_3DMM_v2.tgz
+mkdir -p data_3DMM && cd data_3DMM
+wget -q https://github.com/patrikhuber/eos/raw/master/share/expression_blendshapes_3448.bin -O expression_blendshapes_3448.bin
+wget -q https://github.com/patrikhuber/eos/raw/master/share/sfm_shape_3448.bin -O sfm_shape_3448.bin
+python3 $DIR/scripts/align_face_mesh.py
+retval=$?
+if [ $retval -ne 0 ] ; then
+    echo "Failed to align the head mesh. Make sure numpy, eos_py are installed in your python3 environment!"
+else
+    echo "Head mesh data aligned succesfully"
+fi
 
 cd "$DIR"/pix2face_net/data/models
-#wget https://www.dropbox.com/s/b0byw0lb3oecv37/pix2face_unet_cuda75.pt
-#wget https://www.dropbox.com/s/gg88rbigj1ef4af/pix2face_unet_cuda80.pt
-wget https://www.dropbox.com/s/8c059nuo1i3cs43/pix2face_unet_v10.pt
-wget https://www.dropbox.com/s/qnpvwu67f7704wf/pix2face_unet_v10_pytorch0.4_cpu.pt
+echo "Downloading pytorch u-net model"
+wget -q https://www.dropbox.com/s/qnpvwu67f7704wf/pix2face_unet_v10_pytorch0.4_cpu.pt -O pix2face_unet_v10_pytorch0.4_cpu.pt

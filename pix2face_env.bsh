@@ -1,12 +1,6 @@
 # Source this file to set up pix2face environment.
 PIX2FACE_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Make sure PIX2FACE_BUILD_DIR is set
-if [ -z "$PIX2FACE_BUILD_DIR" ];
-  then echo "Please set environment variable 'PIX2FACE_BUILD_DIR' to the path of your build directory before sourcing this script.";
-  return [1];
-fi
-
 # set this variable to the location of your NVIDIA libraries if you want to use CUDA acceleration.
 #export NVIDIA_LIB_DIR=/usr/lib64/nvidia
 
@@ -14,7 +8,7 @@ fi
 # pix2face_estimation python module
 export PYTHONPATH="${PIX2FACE_SRC_DIR}"/python:${PYTHONPATH}
 # pix2face
-export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face:$PYTHONPATH
+export PYTHONPATH="${PIX2FACE_SRC_DIR}"/pix2face_net:$PYTHONPATH
 # Note: compiled face3d and vxl python modules will be installed to your python site.  If you want to change this, add -DPYTHON_SITE=${INSTALL_DIR} to the cmake command line.
 
 # CPU Support only by default. Change to 0 to enable GPU
