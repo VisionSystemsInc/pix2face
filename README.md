@@ -59,7 +59,7 @@ make install
 ```
 
 Configure your python path:
-Make sure to set the environment variable `PIX2FACE_BUILD_DIR`, and then source the env script:
+Source the env script:
 ```bash
 cd $PIX2FACE_SRC_DIR
 source ./pix2face_env.bsh
@@ -68,7 +68,7 @@ source ./pix2face_env.bsh
 Or, manually:
 
 ```bash
-export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face:${PIX2FACE_SRC_DIR}/python
+export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face_net:${PIX2FACE_SRC_DIR}/python
 ```
 
 Download the required data files to their correct locations by running the `download_data.bsh` script. Note that the ```numpy``` and ```eos_py``` packages are needed for the script to work correctly but they should already be in your python evironment if the requirements.txt file was succefully installed.
