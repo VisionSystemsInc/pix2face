@@ -164,3 +164,20 @@ def render_coefficients(coeffs, pix2face_data, img_idx=0):
     renderer.set_ambient_weight(0.5)
     synth = renderer.render(meshes, coeffs.camera(img_idx))
     return synth
+
+
+def save_coeff_instance(coeffs, pix2face_data, output_fpath, mesh_index=0, img_idx=0):
+    """
+
+    """
+    # lazily create renderer (of which there should only be one.)
+
+    head_mesh_warped = face3d.head_mesh(pix2face_data.head_mesh)
+    head_mesh_warped.apply_coefficients(pix2face_data.subject_components,
+                                        pix2face_data.expression_components,
+                                        coeffs.subject_coeffs(),
+                                        coeffs.expression_coeffs(img_idx))
+    meshes = head_mesh_warped.meshes()
+    for i, mesh in enumerate(meshes):
+        if i == mesh_index:
+            mesh.save_ply(output_fpath)
