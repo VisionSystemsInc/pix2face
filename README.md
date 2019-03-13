@@ -71,7 +71,7 @@ Or, manually:
 export PYTHONPATH=${PIX2FACE_SRC_DIR}/pix2face_net:${PIX2FACE_SRC_DIR}/python
 ```
 
-Download the required data files to their correct locations by running the `download_data.bsh` script. Note that the ```numpy``` and ```eos_py``` packages are needed for the script to work correctly but they should already be in your python evironment if the requirements.txt file was succefully installed.
+Download the required data files to their correct locations by running the `download_data.bsh` script. Note that the ```numpy``` and ```eos_py``` packages are needed for the script to work correctly but they should already be in your python evironment if the requirements.txt file was used to create a python environment.
 ```bash
 cd ${PIX2FACE_SRC_DIR}
 ./download_data.bsh
@@ -83,7 +83,7 @@ To exercise the full pipeline, you can run the demo script:
 ```bash
 python scripts/pix2face_demo.py
 ```
-This will estimate face geometry and render images with new pose and expression in the scripts directory.
+This will estimate face geometry from a test image and render images with new pose and expression.  Rendered images will be saved directly to the `scripts` directory.
 
 
 The scripts directory also contains several examples of pose and coefficient estimation. For example, to generate a CSV file `$POSE_CSV_FNAME` with yaw, pitch, and roll (in degrees) of every face image listed (one per line) in the text file `$IMAGE_PATHS_FILE`:
