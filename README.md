@@ -11,7 +11,7 @@ You have two options for running: within a docker container, or natively on your
    * CMake (version 3.10 or higher)
    * Python (version 3.6 has been tested)
    * numpy, Pillow, scikit-image
-   * pytorch (version 0.4 has been tested), including torchvision
+   * pytorch (versions 0.4 and 1.0 have been tested), including torchvision
    * opencv (opencv-python-headless)
 
 Optional:
