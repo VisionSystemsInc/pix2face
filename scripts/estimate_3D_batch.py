@@ -54,10 +54,10 @@ for img_fname in img_filenames:
     expression_ranges = np.load(os.path.join(pvr_data_dir,'pca_coeff_ranges_expression.npy'))
 
     # keep only the PCA components that we will be estimating
-    subject_components = vxl.vnl_matrix(subject_components[0:num_subject_coeffs,:])
-    expression_components = vxl.vnl_matrix(expression_components[0:num_expression_coeffs,:])
-    subject_ranges = vxl.vnl_matrix(subject_ranges[0:num_subject_coeffs,:])
-    expression_ranges = vxl.vnl_matrix(expression_ranges[0:num_expression_coeffs,:])
+    subject_components = vxl.vnl.matrix(subject_components[0:num_subject_coeffs,:])
+    expression_components = vxl.vnl.matrix(expression_components[0:num_expression_coeffs,:])
+    subject_ranges = vxl.vnl.matrix(subject_ranges[0:num_subject_coeffs,:])
+    expression_ranges = vxl.vnl.matrix(expression_ranges[0:num_expression_coeffs,:])
 
     # create coefficient estimator
     coeff_estimator = face3d.media_coefficient_from_PNCC_and_offset_estimator(head_mesh, subject_components, expression_components, subject_ranges, expression_ranges, debug_mode, debug_dir)
