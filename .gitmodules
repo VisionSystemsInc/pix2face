@@ -1,9 +1,9 @@
 [submodule "pix2face_net"]
 	path = pix2face_net
-	url = git@github.com:visionsystemsinc/pix2face_net.git
+	url = https://github.com/visionsystemsinc/pix2face_net.git
 [submodule "EGL-Registry"]
 	path = EGL-Registry
-	url = git@github.com:KhronosGroup/EGL-Registry.git
+	url = https://github.com/KhronosGroup/EGL-Registry.git
 [submodule "face3d"]
 	path = face3d
-	url = git@github.com:visionsystemsinc/face3d.git
+	url = https://github.com/visionsystemsinc/face3d.git
