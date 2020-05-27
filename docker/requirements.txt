@@ -1,7 +1,9 @@
-numpy==1.15.0
+numpy>=1.18.0
 matplotlib
 Pillow
-scikit-image
+scikit-image>=0.17
 opencv-python-headless
 jupyterlab
 eos-py
+tqdm
+tensorboardX
