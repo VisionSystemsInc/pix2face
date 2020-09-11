@@ -7,3 +7,4 @@ jupyterlab
 eos-py
 tqdm
 tensorboardX
+tifffile
