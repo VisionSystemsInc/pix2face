@@ -5,6 +5,7 @@ import os
 from collections import namedtuple
 import numpy as np
 import vxl
+import vxl.vnl
 import face3d
 import pix2face.test
 from . import mesh_renderer
