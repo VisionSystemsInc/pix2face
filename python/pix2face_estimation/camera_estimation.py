@@ -1,5 +1,6 @@
 import face3d
 import pix2face.test
+import vxl.vgl.algo
 from .camera_decomposition import decompose_camera_rotation
 
 
